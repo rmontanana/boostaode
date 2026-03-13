@@ -1,0 +1,508 @@
+/* ==========================================================================
+   AI Prompt Generator Page Styles
+   BoostAODE vs AODE Web App
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Two-column Layout: Config Panel + Prompt Panel
+   -------------------------------------------------------------------------- */
+
+.prompt-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: var(--spacing-lg);
+  align-items: start;
+}
+
+/* --------------------------------------------------------------------------
+   Config Panel (Left Sidebar)
+   -------------------------------------------------------------------------- */
+
+.config-panel {
+  position: sticky;
+  top: 72px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: background-color var(--transition-base),
+              border-color var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.config-section {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--border-light);
+  transition: border-color var(--transition-base);
+}
+
+.config-section:last-child {
+  border-bottom: none;
+}
+
+.config-section h3 {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--spacing-md);
+}
+
+/* --------------------------------------------------------------------------
+   Detail Level — Radio Cards
+   -------------------------------------------------------------------------- */
+
+.detail-level {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.detail-level-option {
+  position: relative;
+}
+
+.detail-level-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.detail-level-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-input);
+  cursor: pointer;
+  transition: background-color var(--transition-fast),
+              border-color var(--transition-fast),
+              box-shadow var(--transition-fast);
+  user-select: none;
+}
+
+.detail-level-card:hover {
+  background-color: var(--bg-hover);
+  border-color: var(--text-muted);
+}
+
+.detail-level-option input[type="radio"]:checked + .detail-level-card {
+  background-color: var(--accent-light);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 1px var(--accent-primary);
+}
+
+.detail-level-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-elevated);
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.detail-level-option input[type="radio"]:checked + .detail-level-card .detail-level-icon {
+  background-color: var(--accent-primary);
+  color: #ffffff;
+}
+
+.detail-level-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.detail-level-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.detail-level-name {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.detail-level-desc {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Format Options — Radio Group
+   -------------------------------------------------------------------------- */
+
+.format-options {
+  display: flex;
+  width: 100%;
+}
+
+.format-options .radio-group {
+  width: 100%;
+  display: flex;
+}
+
+.format-options .radio-group label {
+  flex: 1;
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   Context Stats — Info Badges
+   -------------------------------------------------------------------------- */
+
+.context-stats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.context-stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.context-stat-value {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+}
+
+/* --------------------------------------------------------------------------
+   Prompt Panel (Right Main Area)
+   -------------------------------------------------------------------------- */
+
+.prompt-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+/* Question area */
+.prompt-question-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.prompt-question-section label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.prompt-question-section textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+/* --------------------------------------------------------------------------
+   Example Questions — Clickable Chips
+   -------------------------------------------------------------------------- */
+
+.example-questions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.example-questions-label {
+  width: 100%;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.example-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-md);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background-color var(--transition-fast),
+              border-color var(--transition-fast),
+              color var(--transition-fast);
+  user-select: none;
+  line-height: 1.5;
+}
+
+.example-chip:hover {
+  background-color: var(--accent-light);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.example-chip svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Prompt Output
+   -------------------------------------------------------------------------- */
+
+.prompt-output-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.prompt-output-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+.prompt-output-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.prompt-output-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.prompt-output {
+  width: 100%;
+  min-height: 400px;
+  padding: var(--spacing-md);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  line-height: 1.6;
+  background-color: var(--bg-input);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  resize: vertical;
+  transition: background-color var(--transition-base),
+              border-color var(--transition-fast);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.prompt-output:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-light);
+  outline: none;
+}
+
+/* --------------------------------------------------------------------------
+   Token Badge
+   -------------------------------------------------------------------------- */
+
+.token-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: 2px var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  font-family: var(--font-mono);
+  line-height: 1.5;
+  border-radius: var(--radius-full);
+  background-color: var(--accent-light);
+  color: var(--accent-primary);
+  white-space: nowrap;
+}
+
+.token-badge svg {
+  width: 12px;
+  height: 12px;
+}
+
+.token-badge--warning {
+  background-color: var(--color-warning-light);
+  color: var(--color-warning);
+}
+
+.token-badge--error {
+  background-color: var(--color-error-light);
+  color: var(--color-error);
+}
+
+/* --------------------------------------------------------------------------
+   AI External Links
+   -------------------------------------------------------------------------- */
+
+.ai-links-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.ai-links-label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.ai-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.ai-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity var(--transition-fast),
+              transform var(--transition-fast),
+              box-shadow var(--transition-fast);
+  white-space: nowrap;
+}
+
+.ai-link:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+  color: #ffffff;
+}
+
+.ai-link:active {
+  transform: scale(0.97);
+}
+
+.ai-link svg {
+  width: 16px;
+  height: 16px;
+}
+
+.ai-link--claude {
+  background-color: #d4760a;
+}
+
+.ai-link--chatgpt {
+  background-color: #10a37f;
+}
+
+.ai-link--gemini {
+  background-color: #4285f4;
+}
+
+.ai-link--zai {
+  background-color: #71717a;
+}
+
+/* --------------------------------------------------------------------------
+   Copy Feedback Toast
+   -------------------------------------------------------------------------- */
+
+.copy-feedback {
+  position: fixed;
+  bottom: var(--spacing-xl);
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background-color: var(--color-success);
+  color: #ffffff;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.copy-feedback.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive: Mobile
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 767px) {
+  .prompt-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .config-panel {
+    position: static;
+  }
+
+  .config-section {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .prompt-output {
+    min-height: 300px;
+    font-size: 11px;
+  }
+
+  .ai-links {
+    flex-direction: column;
+  }
+
+  .ai-link {
+    justify-content: center;
+  }
+
+  .prompt-output-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .example-chip {
+    font-size: 11px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive: Tablet
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .prompt-layout {
+    grid-template-columns: 260px 1fr;
+  }
+
+  .config-section {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+}

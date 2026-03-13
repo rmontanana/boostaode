@@ -1,0 +1,67 @@
+{
+  "tests": [
+    {
+      "metric": "accuracy",
+      "wilcoxon_stat": 312.0,
+      "p_value": 0.192196,
+      "significant": false,
+      "wins": 22,
+      "ties": 1,
+      "losses": 17
+    },
+    {
+      "metric": "CLC_0.5",
+      "wilcoxon_stat": 53.0,
+      "p_value": 8.202733e-08,
+      "significant": true,
+      "wins": 32,
+      "ties": 1,
+      "losses": 7
+    },
+    {
+      "metric": "CLC_0.6",
+      "wilcoxon_stat": 54.0,
+      "p_value": 9.226824e-08,
+      "significant": true,
+      "wins": 32,
+      "ties": 1,
+      "losses": 7
+    },
+    {
+      "metric": "CLC_0.7",
+      "wilcoxon_stat": 57.0,
+      "p_value": 1.304434e-07,
+      "significant": true,
+      "wins": 32,
+      "ties": 1,
+      "losses": 7
+    },
+    {
+      "metric": "CLC_0.8",
+      "wilcoxon_stat": 64.0,
+      "p_value": 2.822944e-07,
+      "significant": true,
+      "wins": 32,
+      "ties": 1,
+      "losses": 7
+    },
+    {
+      "metric": "CLC_0.9",
+      "wilcoxon_stat": 84.0,
+      "p_value": 2.037499e-06,
+      "significant": true,
+      "wins": 31,
+      "ties": 1,
+      "losses": 8
+    },
+    {
+      "metric": "CLC_1.0",
+      "wilcoxon_stat": 312.0,
+      "p_value": 0.192196,
+      "significant": false,
+      "wins": 22,
+      "ties": 1,
+      "losses": 17
+    }
+  ]
+}

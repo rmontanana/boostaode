@@ -1,0 +1,280 @@
+{
+  "research_questions": {
+    "RQ1": "Considerando la metrica CLC_alpha (que combina accuracy y complejidad del ensemble), ofrece BoostAODE un mejor trade-off accuracy-complejidad que AODE?",
+    "RQ2": "En que escenarios (alta dimensionalidad, alta correlacion entre variables) es mas ventajoso usar BoostAODE frente a AODE?",
+    "RQ3": "Cual es la reduccion tipica de complejidad (numero de SPODEs) que consigue BoostAODE respecto a AODE?",
+    "RQ4": "Existen escenarios donde AODE es suficiente y no merece la pena el overhead de BoostAODE?",
+    "RQ5": "Cual es el coste computacional adicional de BoostAODE respecto a AODE?"
+  },
+  "config": {
+    "n_folds": 5,
+    "n_repetitions": 5,
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1024
+    ],
+    "classifiers": [
+      "AODE",
+      "BoostAODE"
+    ]
+  },
+  "global_stats": {
+    "mean_accuracy": {
+      "AODE": 0.870086,
+      "BoostAODE": 0.877194
+    },
+    "mean_CLC_0.5": {
+      "AODE": 0.435043,
+      "BoostAODE": 0.577655
+    },
+    "accuracy_wins_BoostAODE": 22,
+    "accuracy_ties": 1,
+    "accuracy_losses_BoostAODE": 17
+  },
+  "dataset_list": [
+    {
+      "name": "MiniBooNE",
+      "n_samples": 130064,
+      "n_features": 50,
+      "n_classes": 2
+    },
+    {
+      "name": "balance-scale",
+      "n_samples": 625,
+      "n_features": 4,
+      "n_classes": 3
+    },
+    {
+      "name": "banknote-authentication",
+      "n_samples": 1372,
+      "n_features": 4,
+      "n_classes": 2
+    },
+    {
+      "name": "breast-cancer-wisconsin",
+      "n_samples": 683,
+      "n_features": 9,
+      "n_classes": 2
+    },
+    {
+      "name": "car",
+      "n_samples": 1728,
+      "n_features": 6,
+      "n_classes": 2
+    },
+    {
+      "name": "diabetes",
+      "n_samples": 768,
+      "n_features": 8,
+      "n_classes": 2
+    },
+    {
+      "name": "ecoli",
+      "n_samples": 336,
+      "n_features": 7,
+      "n_classes": 8
+    },
+    {
+      "name": "glass",
+      "n_samples": 214,
+      "n_features": 9,
+      "n_classes": 6
+    },
+    {
+      "name": "haberman",
+      "n_samples": 306,
+      "n_features": 3,
+      "n_classes": 2
+    },
+    {
+      "name": "har",
+      "n_samples": 10299,
+      "n_features": 561,
+      "n_classes": 6
+    },
+    {
+      "name": "heart-statlog",
+      "n_samples": 270,
+      "n_features": 13,
+      "n_classes": 2
+    },
+    {
+      "name": "ionosphere",
+      "n_samples": 351,
+      "n_features": 34,
+      "n_classes": 2
+    },
+    {
+      "name": "iris",
+      "n_samples": 150,
+      "n_features": 4,
+      "n_classes": 3
+    },
+    {
+      "name": "isolet",
+      "n_samples": 7797,
+      "n_features": 617,
+      "n_classes": 26
+    },
+    {
+      "name": "jm1",
+      "n_samples": 10880,
+      "n_features": 21,
+      "n_classes": 2
+    },
+    {
+      "name": "kc1",
+      "n_samples": 2109,
+      "n_features": 21,
+      "n_classes": 2
+    },
+    {
+      "name": "kr-vs-kp",
+      "n_samples": 3196,
+      "n_features": 36,
+      "n_classes": 2
+    },
+    {
+      "name": "letter",
+      "n_samples": 20000,
+      "n_features": 16,
+      "n_classes": 26
+    },
+    {
+      "name": "madelon",
+      "n_samples": 2600,
+      "n_features": 500,
+      "n_classes": 2
+    },
+    {
+      "name": "mfeat-morphological",
+      "n_samples": 2000,
+      "n_features": 6,
+      "n_classes": 10
+    },
+    {
+      "name": "musk",
+      "n_samples": 6598,
+      "n_features": 167,
+      "n_classes": 2
+    },
+    {
+      "name": "nursery",
+      "n_samples": 12960,
+      "n_features": 8,
+      "n_classes": 5
+    },
+    {
+      "name": "optdigits",
+      "n_samples": 5620,
+      "n_features": 64,
+      "n_classes": 10
+    },
+    {
+      "name": "ozone-level-8hr",
+      "n_samples": 2534,
+      "n_features": 72,
+      "n_classes": 2
+    },
+    {
+      "name": "page-blocks",
+      "n_samples": 5473,
+      "n_features": 10,
+      "n_classes": 5
+    },
+    {
+      "name": "parkinsons",
+      "n_samples": 195,
+      "n_features": 22,
+      "n_classes": 2
+    },
+    {
+      "name": "pc1",
+      "n_samples": 1109,
+      "n_features": 21,
+      "n_classes": 2
+    },
+    {
+      "name": "pendigits",
+      "n_samples": 10992,
+      "n_features": 16,
+      "n_classes": 10
+    },
+    {
+      "name": "satellite",
+      "n_samples": 5100,
+      "n_features": 36,
+      "n_classes": 2
+    },
+    {
+      "name": "segment",
+      "n_samples": 2310,
+      "n_features": 19,
+      "n_classes": 7
+    },
+    {
+      "name": "seismic-bumps",
+      "n_samples": 210,
+      "n_features": 7,
+      "n_classes": 3
+    },
+    {
+      "name": "semeion",
+      "n_samples": 1593,
+      "n_features": 256,
+      "n_classes": 10
+    },
+    {
+      "name": "sonar",
+      "n_samples": 208,
+      "n_features": 60,
+      "n_classes": 2
+    },
+    {
+      "name": "spambase",
+      "n_samples": 4601,
+      "n_features": 57,
+      "n_classes": 2
+    },
+    {
+      "name": "spectf",
+      "n_samples": 349,
+      "n_features": 44,
+      "n_classes": 2
+    },
+    {
+      "name": "tic-tac-toe",
+      "n_samples": 958,
+      "n_features": 9,
+      "n_classes": 2
+    },
+    {
+      "name": "vehicle",
+      "n_samples": 846,
+      "n_features": 18,
+      "n_classes": 4
+    },
+    {
+      "name": "vowel",
+      "n_samples": 990,
+      "n_features": 12,
+      "n_classes": 11
+    },
+    {
+      "name": "waveform",
+      "n_samples": 5000,
+      "n_features": 40,
+      "n_classes": 3
+    },
+    {
+      "name": "wine",
+      "n_samples": 178,
+      "n_features": 13,
+      "n_classes": 3
+    }
+  ],
+  "clc_definition": "CLC_alpha = alpha x accuracy + (1 - alpha) x (1 - n_spodes / n_features)"
+}

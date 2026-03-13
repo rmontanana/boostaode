@@ -1,0 +1,249 @@
+/* ==========================================================================
+   Theme: Cosmic Night (Dark) + Light Mode
+   CSS Custom Properties for BoostAODE vs AODE Web App
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Dark Theme (Default) — Cosmic Night from tweakcn.com
+   -------------------------------------------------------------------------- */
+
+:root,
+[data-theme="dark"] {
+  /* Backgrounds */
+  --bg-primary: #0a0a1a;
+  --bg-card: #12122a;
+  --bg-elevated: #1a1a3e;
+  --bg-input: #0e0e24;
+  --bg-hover: #1e1e4a;
+  --bg-selected: rgba(124, 58, 237, 0.15);
+
+  /* Borders */
+  --border-color: #2a2a5a;
+  --border-light: #1e1e40;
+
+  /* Text */
+  --text-primary: #e8e8f0;
+  --text-secondary: #9090b0;
+  --text-muted: #606080;
+  --text-inverse: #0a0a1a;
+
+  /* Accent — Cosmic Violet */
+  --accent-primary: #7c3aed;
+  --accent-hover: #9333ea;
+  --accent-light: rgba(124, 58, 237, 0.2);
+
+  /* Accent — Stellar Cyan */
+  --accent-secondary: #06b6d4;
+  --accent-secondary-hover: #22d3ee;
+  --accent-secondary-light: rgba(6, 182, 212, 0.2);
+
+  /* Status colors */
+  --color-success: #10b981;
+  --color-success-light: rgba(16, 185, 129, 0.15);
+  --color-error: #ef4444;
+  --color-error-light: rgba(239, 68, 68, 0.15);
+  --color-warning: #f59e0b;
+  --color-warning-light: rgba(245, 158, 11, 0.15);
+  --color-info: #3b82f6;
+  --color-info-light: rgba(59, 130, 246, 0.15);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 20px rgba(124, 58, 237, 0.15);
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, monospace;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 2rem;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.3s ease;
+
+  /* Chart colors */
+  --chart-aode: #06b6d4;
+  --chart-boostaode: #7c3aed;
+  --chart-positive: #10b981;
+  --chart-negative: #ef4444;
+  --chart-neutral: #9090b0;
+  --chart-grid: rgba(144, 144, 176, 0.15);
+  --chart-grid-dark: rgba(144, 144, 176, 0.08);
+}
+
+/* --------------------------------------------------------------------------
+   Light Theme
+   -------------------------------------------------------------------------- */
+
+[data-theme="light"] {
+  /* Backgrounds */
+  --bg-primary: #f8f9fc;
+  --bg-card: #ffffff;
+  --bg-elevated: #f0f1f5;
+  --bg-input: #ffffff;
+  --bg-hover: #eef0f5;
+  --bg-selected: rgba(124, 58, 237, 0.08);
+
+  /* Borders */
+  --border-color: #e2e4ea;
+  --border-light: #eef0f5;
+
+  /* Text */
+  --text-primary: #1a1a2e;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --text-inverse: #ffffff;
+
+  /* Accent — Cosmic Violet (slightly adjusted for light bg) */
+  --accent-primary: #7c3aed;
+  --accent-hover: #6d28d9;
+  --accent-light: rgba(124, 58, 237, 0.1);
+
+  /* Accent — Stellar Cyan (slightly adjusted for light bg) */
+  --accent-secondary: #0891b2;
+  --accent-secondary-hover: #0e7490;
+  --accent-secondary-light: rgba(8, 145, 178, 0.1);
+
+  /* Status colors (slightly deeper for light backgrounds) */
+  --color-success: #059669;
+  --color-success-light: rgba(5, 150, 105, 0.1);
+  --color-error: #dc2626;
+  --color-error-light: rgba(220, 38, 38, 0.1);
+  --color-warning: #d97706;
+  --color-warning-light: rgba(217, 119, 6, 0.1);
+  --color-info: #2563eb;
+  --color-info-light: rgba(37, 99, 235, 0.1);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-glow: 0 0 20px rgba(124, 58, 237, 0.08);
+
+  /* Chart colors (same hues, grid adjusted) */
+  --chart-grid: rgba(0, 0, 0, 0.1);
+  --chart-grid-dark: rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================================================
+   Base Reset & Global Styles
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-family);
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background-color var(--transition-base), color var(--transition-base);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+code,
+pre {
+  font-family: var(--font-mono);
+}
+
+::selection {
+  background-color: var(--accent-light);
+  color: var(--text-primary);
+}
+
+/* Scrollbar styling (Webkit) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) var(--bg-primary);
+}

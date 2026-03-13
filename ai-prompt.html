@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta IA - BoostAODE vs AODE</title>
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/ai-prompt.css">
+</head>
+<body>
+
+    <!-- ====================================================================
+         Navbar
+         ==================================================================== -->
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="index.html" class="navbar-logo">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 20V10"></path>
+                    <path d="M18 20V4"></path>
+                    <path d="M6 20v-4"></path>
+                </svg>
+                <span>BoostAODE</span>
+            </a>
+
+            <div class="navbar-nav">
+                <a href="index.html" class="nav-link">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                    </svg>
+                    Resultados
+                </a>
+                <a href="charts.html" class="nav-link">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>
+                    Gr&aacute;ficos
+                </a>
+                <a href="ai-prompt.html" class="nav-link active">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    Consulta IA
+                </a>
+            </div>
+
+            <div class="navbar-actions">
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema">
+                    <svg id="icon-sun" class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg id="icon-moon" class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ====================================================================
+         Main Content
+         ==================================================================== -->
+    <main class="container" id="main-content">
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>Consulta IA</h1>
+            <p>Genera un prompt con los datos experimentales para consultar una IA externa</p>
+        </div>
+
+        <!-- Two-column Layout -->
+        <div class="prompt-layout">
+
+            <!-- ============================================================
+                 Left: Config Panel
+                 ============================================================ -->
+            <aside class="config-panel">
+
+                <!-- Section: Detail Level -->
+                <div class="config-section">
+                    <h3>Nivel de Detalle</h3>
+                    <div class="detail-level">
+                        <!-- Basic -->
+                        <label class="detail-level-option">
+                            <input type="radio" name="detail-level" value="basic" checked>
+                            <div class="detail-level-card">
+                                <div class="detail-level-icon">
+                                    <!-- Simple chart icon -->
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                                    </svg>
+                                </div>
+                                <div class="detail-level-info">
+                                    <span class="detail-level-name">B&aacute;sico</span>
+                                    <span class="detail-level-desc">Resumen estad&iacute;stico principal (~2K tokens)</span>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Detailed -->
+                        <label class="detail-level-option">
+                            <input type="radio" name="detail-level" value="detailed">
+                            <div class="detail-level-card">
+                                <div class="detail-level-icon">
+                                    <!-- Table icon -->
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="3" y1="9" x2="21" y2="9"></line>
+                                        <line x1="3" y1="15" x2="21" y2="15"></line>
+                                        <line x1="9" y1="3" x2="9" y2="21"></line>
+                                    </svg>
+                                </div>
+                                <div class="detail-level-info">
+                                    <span class="detail-level-name">Detallado</span>
+                                    <span class="detail-level-desc">Datos por dataset + tests estad&iacute;sticos (~8K tokens)</span>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Complete -->
+                        <label class="detail-level-option">
+                            <input type="radio" name="detail-level" value="complete">
+                            <div class="detail-level-card">
+                                <div class="detail-level-icon">
+                                    <!-- Database icon -->
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                                    </svg>
+                                </div>
+                                <div class="detail-level-info">
+                                    <span class="detail-level-name">Completo</span>
+                                    <span class="detail-level-desc">Todos los resultados experimentales (~50K tokens)</span>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Section: Data Format -->
+                <div class="config-section">
+                    <h3>Formato de Datos</h3>
+                    <div class="format-options">
+                        <div class="radio-group">
+                            <input type="radio" name="data-format" id="fmt-text" value="text" checked>
+                            <label for="fmt-text">Texto plano</label>
+                            <input type="radio" name="data-format" id="fmt-json" value="json">
+                            <label for="fmt-json">JSON</label>
+                            <input type="radio" name="data-format" id="fmt-csv" value="csv">
+                            <label for="fmt-csv">CSV</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section: Information -->
+                <div class="config-section">
+                    <h3>Informaci&oacute;n</h3>
+                    <div class="context-stats">
+                        <div class="context-stat-row">
+                            <span>Datasets</span>
+                            <span class="context-stat-value">40</span>
+                        </div>
+                        <div class="context-stat-row">
+                            <span>Resultados</span>
+                            <span class="context-stat-value">2000</span>
+                        </div>
+                        <div class="context-stat-row">
+                            <span>Clasificadores</span>
+                            <span class="context-stat-value">2</span>
+                        </div>
+                        <div class="context-stat-row">
+                            <span>Tokens estimados</span>
+                            <span class="context-stat-value" id="sidebar-token-estimate">~2K</span>
+                        </div>
+                    </div>
+                </div>
+
+            </aside>
+
+            <!-- ============================================================
+                 Right: Prompt Panel
+                 ============================================================ -->
+            <div class="prompt-panel">
+
+                <!-- Question Input -->
+                <div class="prompt-question-section">
+                    <label for="prompt-question">Tu pregunta</label>
+                    <textarea id="prompt-question" rows="3" placeholder="Escribe tu pregunta sobre los resultados experimentales..."></textarea>
+                </div>
+
+                <!-- Example Questions -->
+                <div class="example-questions">
+                    <div class="example-questions-label">Preguntas de ejemplo</div>
+
+                    <button class="example-chip" data-question="&#191;En qu&#233; datasets BoostAODE supera significativamente a AODE en accuracy?">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        Datasets donde BoostAODE gana en accuracy
+                    </button>
+
+                    <button class="example-chip" data-question="&#191;Cu&#225;l es el valor de &#945; breakeven t&#237;pico y qu&#233; significa para la elecci&#243;n entre clasificadores?">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                        Valor de &alpha; breakeven y su significado
+                    </button>
+
+                    <button class="example-chip" data-question="Analiza la relaci&#243;n entre la dimensionalidad del dataset y la ventaja de BoostAODE">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                        Dimensionalidad vs ventaja de BoostAODE
+                    </button>
+
+                    <button class="example-chip" data-question="&#191;En qu&#233; escenarios no merece la pena usar BoostAODE frente a AODE?">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                        Escenarios donde AODE es suficiente
+                    </button>
+
+                    <button class="example-chip" data-question="Resume los resultados principales respondiendo a las preguntas de investigaci&#243;n RQ1-RQ5">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        Resumen de RQ1-RQ5
+                    </button>
+
+                    <button class="example-chip" data-question="&#191;C&#243;mo afecta el tama&#241;o del dataset a la compresi&#243;n que consigue BoostAODE?">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        Tama&ntilde;o del dataset vs compresi&oacute;n
+                    </button>
+                </div>
+
+                <!-- Generated Prompt Output -->
+                <div class="prompt-output-section">
+                    <div class="prompt-output-header">
+                        <div class="prompt-output-title">
+                            <!-- Sparkles icon -->
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 3l1.912 5.813a2 2 0 0 0 1.275 1.275L21 12l-5.813 1.912a2 2 0 0 0-1.275 1.275L12 21l-1.912-5.813a2 2 0 0 0-1.275-1.275L3 12l5.813-1.912a2 2 0 0 0 1.275-1.275L12 3z"></path>
+                            </svg>
+                            Prompt Generado
+                        </div>
+                        <div class="prompt-output-actions">
+                            <span class="token-badge" id="token-badge">~2K tokens</span>
+                            <button class="btn btn-secondary btn-sm" id="copy-prompt-btn">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                Copiar
+                            </button>
+                        </div>
+                    </div>
+                    <textarea class="prompt-output" id="prompt-output" readonly placeholder="El prompt se generar&aacute; autom&aacute;ticamente..."></textarea>
+                </div>
+
+                <!-- AI External Links -->
+                <div class="ai-links-section">
+                    <div class="ai-links-label">Abrir en IA externa</div>
+                    <div class="ai-links">
+                        <a href="https://claude.ai/new" target="_blank" rel="noopener noreferrer" class="ai-link ai-link--claude">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 3l1.912 5.813a2 2 0 0 0 1.275 1.275L21 12l-5.813 1.912a2 2 0 0 0-1.275 1.275L12 21l-1.912-5.813a2 2 0 0 0-1.275-1.275L3 12l5.813-1.912a2 2 0 0 0 1.275-1.275L12 3z"></path>
+                            </svg>
+                            Claude
+                        </a>
+                        <a href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" class="ai-link ai-link--chatgpt">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            ChatGPT
+                        </a>
+                        <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" class="ai-link ai-link--gemini">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                            Gemini
+                        </a>
+                        <a href="https://z.ai" target="_blank" rel="noopener noreferrer" class="ai-link ai-link--zai">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="4 7 4 4 20 4 20 7"></polyline>
+                                <line x1="9.5" y1="4" x2="14.5" y2="20"></line>
+                                <polyline points="4 17 4 20 20 20 20 17"></polyline>
+                            </svg>
+                            z.ai
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ====================================================================
+         Footer
+         ==================================================================== -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <p>BoostAODE vs AODE &mdash; Experimento de comparaci&oacute;n pareada &mdash; 40 datasets, 5-fold &times; 5 repeticiones</p>
+        </div>
+    </footer>
+
+    <!-- ====================================================================
+         Loading Overlay
+         ==================================================================== -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="spinner spinner-lg"></div>
+        <div class="loading-text">Cargando datos experimentales...</div>
+    </div>
+
+    <!-- ====================================================================
+         Copy Feedback Toast
+         ==================================================================== -->
+    <div class="copy-feedback" id="copy-feedback">Copiado!</div>
+
+    <!-- ====================================================================
+         Scripts
+         ==================================================================== -->
+    <script src="js/theme.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/ai-prompt.js"></script>
+
+</body>
+</html>
