@@ -404,18 +404,18 @@ function renderScatterPareto() {
     var ctx = document.getElementById('chart-canvas').getContext('2d');
 
     var aodeData = datasets.map(function(d) {
-        return { x: d.acc_AODE, y: 0, dataset: d.dataset, n_spodes: d.n_spodes_AODE, n_features: d.n_features };
+        return { x: 0, y: d.acc_AODE, dataset: d.dataset, n_spodes: d.n_spodes_AODE, n_features: d.n_features };
     });
     var boostData = datasets.map(function(d) {
-        return { x: d.acc_BoostAODE, y: d.simplicity_BoostAODE, dataset: d.dataset, n_spodes: d.n_spodes_BoostAODE, n_features: d.n_features };
+        return { x: d.simplicity_BoostAODE, y: d.acc_BoostAODE, dataset: d.dataset, n_spodes: d.n_spodes_BoostAODE, n_features: d.n_features };
     });
 
     function makeTooltip(ctx) {
         var p = ctx.raw;
         return [
             p.dataset,
-            'Accuracy: ' + p.x.toFixed(4),
-            'Simplicidad: ' + p.y.toFixed(4),
+            'Accuracy: ' + p.y.toFixed(4),
+            'Simplicidad: ' + p.x.toFixed(4),
             'SPODEs: ' + p.n_spodes + ' / ' + p.n_features
         ];
     }
@@ -467,14 +467,14 @@ function renderScatterPareto() {
             },
             scales: {
                 x: {
-                    title: { display: true, text: i18n.t('charts.axis.accuracy'), color: colors.textSec, font: { size: 13 } },
-                    min: 0.5, max: 1.0,
+                    title: { display: true, text: i18n.t('charts.axis.simplicity'), color: colors.textSec, font: { size: 13 } },
+                    min: -0.05, max: 1.0,
                     ticks: { color: colors.textMuted, font: { size: 11 } },
                     grid: { color: colors.gridDark }
                 },
                 y: {
-                    title: { display: true, text: i18n.t('charts.axis.simplicity'), color: colors.textSec, font: { size: 13 } },
-                    min: -0.05, max: 1.0,
+                    title: { display: true, text: i18n.t('charts.axis.accuracy'), color: colors.textSec, font: { size: 13 } },
+                    min: 0.5, max: 1.0,
                     ticks: { color: colors.textMuted, font: { size: 11 } },
                     grid: { color: colors.gridDark }
                 }
