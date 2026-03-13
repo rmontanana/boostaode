@@ -511,7 +511,7 @@
   }
 
   .layout-sidebar {
-    grid-template-columns: 240px 1fr;
+    grid-template-columns: 280px 1fr;
   }
 
   .container,
@@ -522,6 +522,12 @@
 }
 
 /* Desktop: > 1024px — default styles apply */
+
+@media (min-width: 1025px) {
+  .layout-sidebar {
+    grid-template-columns: 320px 1fr;
+  }
+}
 
 /* Large screens */
 @media (min-width: 1600px) {
