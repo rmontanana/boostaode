@@ -63,9 +63,8 @@ const i18n = (() => {
             // Controls
             'results.classifierLabel': 'Classifier:',
             'results.segAll': 'All',
-            'results.segHighDim': 'High Dim',
-            'results.segLowDim': 'Low Dim',
             'results.segSmall': 'Small',
+            'results.segMedium': 'Medium',
             'results.segLarge': 'Large',
 
             // Summary table columns
@@ -115,10 +114,9 @@ const i18n = (() => {
 
             // Segment labels (long form for segmented table)
             'results.segLabelAll': 'All',
-            'results.segLabelHighDim': 'High Dimensionality',
-            'results.segLabelLowDim': 'Low Dimensionality',
-            'results.segLabelSmall': 'Small',
-            'results.segLabelLarge': 'Large',
+            'results.segLabelSmall': 'Small (<10 feat.)',
+            'results.segLabelMedium': 'Medium (10-99 feat.)',
+            'results.segLabelLarge': 'Large (>=100 feat.)',
 
             // Pagination
             'results.pagination': '{0} result(s) \u2014 Page {1} of {2}',
@@ -188,9 +186,8 @@ const i18n = (() => {
             // Heatmap
             'charts.heatmap.segment': 'Segment',
             'charts.heatmap.all': 'All',
-            'charts.heatmap.highDim': 'High Dim',
-            'charts.heatmap.lowDim': 'Low Dim',
             'charts.heatmap.small': 'Small',
+            'charts.heatmap.medium': 'Medium',
             'charts.heatmap.large': 'Large',
 
             // Radar axes
@@ -323,10 +320,9 @@ const i18n = (() => {
 
             // Segment labels for prompts
             'ai.seg.all': 'All',
-            'ai.seg.highDim': 'High dimensionality',
-            'ai.seg.lowDim': 'Low dimensionality',
-            'ai.seg.small': 'Small datasets',
-            'ai.seg.large': 'Large datasets',
+            'ai.seg.small': 'Small datasets (<10 feat.)',
+            'ai.seg.medium': 'Medium datasets (10-99 feat.)',
+            'ai.seg.large': 'Large datasets (>=100 feat.)',
 
             // Table headers in prompts
             'ai.table.dataset': 'Dataset',
@@ -406,9 +402,8 @@ const i18n = (() => {
 
             'results.classifierLabel': 'Clasificador:',
             'results.segAll': 'Todos',
-            'results.segHighDim': 'Alta Dim',
-            'results.segLowDim': 'Baja Dim',
             'results.segSmall': 'Peque\u00f1os',
+            'results.segMedium': 'Medianos',
             'results.segLarge': 'Grandes',
 
             'results.colDataset': 'Dataset',
@@ -453,10 +448,9 @@ const i18n = (() => {
             'results.colMeanCLCDiff': '\u0394 CLC medio',
 
             'results.segLabelAll': 'Todos',
-            'results.segLabelHighDim': 'Alta Dimensionalidad',
-            'results.segLabelLowDim': 'Baja Dimensionalidad',
-            'results.segLabelSmall': 'Peque\u00f1os',
-            'results.segLabelLarge': 'Grandes',
+            'results.segLabelSmall': 'Peque\u00f1os (<10 var.)',
+            'results.segLabelMedium': 'Medianos (10-99 var.)',
+            'results.segLabelLarge': 'Grandes (>=100 var.)',
 
             'results.pagination': '{0} resultado(s) \u2014 P\u00e1gina {1} de {2}',
 
@@ -521,9 +515,8 @@ const i18n = (() => {
 
             'charts.heatmap.segment': 'Segmento',
             'charts.heatmap.all': 'Todos',
-            'charts.heatmap.highDim': 'Alta Dim',
-            'charts.heatmap.lowDim': 'Baja Dim',
             'charts.heatmap.small': 'Peque\u00f1os',
+            'charts.heatmap.medium': 'Medianos',
             'charts.heatmap.large': 'Grandes',
 
             'charts.radar.accuracy': 'Accuracy',
@@ -647,10 +640,9 @@ const i18n = (() => {
             'ai.ctx.notLoaded': '(Datos no cargados)',
 
             'ai.seg.all': 'Todos',
-            'ai.seg.highDim': 'Alta dimensionalidad',
-            'ai.seg.lowDim': 'Baja dimensionalidad',
-            'ai.seg.small': 'Datasets peque\u00f1os',
-            'ai.seg.large': 'Datasets grandes',
+            'ai.seg.small': 'Datasets peque\u00f1os (<10 var.)',
+            'ai.seg.medium': 'Datasets medianos (10-99 var.)',
+            'ai.seg.large': 'Datasets grandes (>=100 var.)',
 
             'ai.table.dataset': 'Dataset',
             'ai.table.samples': 'Muestras',

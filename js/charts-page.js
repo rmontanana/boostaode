@@ -1064,13 +1064,12 @@ function renderHeatmap() {
     var segments = AppData.segmented.segments;
     var htmlEl = document.getElementById('chart-html');
 
-    var segmentNames = ['all', 'high_dim', 'low_dim', 'small', 'large'];
+    var segmentNames = ['all', 'small', 'medium', 'large'];
     var segmentLabels = {
         'all': i18n.t('charts.heatmap.all') + ' (40)',
-        'high_dim': i18n.t('charts.heatmap.highDim') + ' (9)',
-        'low_dim': i18n.t('charts.heatmap.lowDim') + ' (31)',
-        'small': i18n.t('charts.heatmap.small') + ' (17)',
-        'large': i18n.t('charts.heatmap.large') + ' (23)'
+        'small': i18n.t('charts.heatmap.small') + ' (13)',
+        'medium': i18n.t('charts.heatmap.medium') + ' (22)',
+        'large': i18n.t('charts.heatmap.large') + ' (5)'
     };
     var alphas = ['0.5', '0.6', '0.7', '0.8', '0.9', '1.0'];
 

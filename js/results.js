@@ -233,10 +233,9 @@ function getSummaryData() {
         // Segment filter
         if (state.segment !== 'all') {
             var passSegment = false;
-            if (state.segment === 'high_dim' && d.n_features > 50) passSegment = true;
-            if (state.segment === 'low_dim' && d.n_features <= 50) passSegment = true;
-            if (state.segment === 'small' && d.n_samples < 1000) passSegment = true;
-            if (state.segment === 'large' && d.n_samples >= 1000) passSegment = true;
+            if (state.segment === 'small' && d.n_features < 10) passSegment = true;
+            if (state.segment === 'medium' && d.n_features >= 10 && d.n_features < 100) passSegment = true;
+            if (state.segment === 'large' && d.n_features >= 100) passSegment = true;
             if (!passSegment) continue;
         }
 
@@ -574,9 +573,8 @@ function renderSegmentedAnalysis() {
 
     var segmentLabels = {
         'all': i18n.t('results.segLabelAll'),
-        'high_dim': i18n.t('results.segLabelHighDim'),
-        'low_dim': i18n.t('results.segLabelLowDim'),
         'small': i18n.t('results.segLabelSmall'),
+        'medium': i18n.t('results.segLabelMedium'),
         'large': i18n.t('results.segLabelLarge')
     };
 

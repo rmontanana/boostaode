@@ -568,9 +568,8 @@ function padRight(str, len) {
 function segmentLabel(seg) {
     var labels = {
         'all': i18n.t('ai.seg.all'),
-        'high_dim': i18n.t('ai.seg.highDim'),
-        'low_dim': i18n.t('ai.seg.lowDim'),
         'small': i18n.t('ai.seg.small'),
+        'medium': i18n.t('ai.seg.medium'),
         'large': i18n.t('ai.seg.large')
     };
     return labels[seg] || seg;
