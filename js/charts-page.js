@@ -18,18 +18,18 @@ const chartState = {
 // ---------------------------------------------------------------------------
 
 const CHARTS = [
-    { id: 'scatter-accuracy', name: 'Scatter Accuracy', icon: '\u2299', description: 'Diagrama de dispersi\u00f3n que compara la accuracy media de BoostAODE (eje Y) frente a AODE (eje X) para cada dataset. Los puntos por encima de la diagonal y=x indican que BoostAODE supera a AODE.' },
-    { id: 'scatter-pareto', name: 'Accuracy vs Simplicidad', icon: '\u25c8', description: 'Frente de Pareto: accuracy (eje X) frente a simplicidad del modelo (eje Y). AODE siempre tiene simplicidad 0 (usa todos los SPODEs). BoostAODE puede alcanzar mayor simplicidad al seleccionar menos SPODEs.' },
-    { id: 'clc-boxplots', name: 'Boxplots CLC_\u03b1', icon: '\u2610', description: 'Distribuci\u00f3n de los valores CLC_\u03b1 para cada clasificador a trav\u00e9s de los 40 datasets. Se muestran los cuartiles (Q1, mediana, Q3) y los puntos individuales de cada dataset.' },
-    { id: 'alpha-breakeven', name: 'Histograma \u03b1 Breakeven', icon: '\u229e', description: 'Distribuci\u00f3n de los valores de \u03b1 breakeven. Valores bajos indican que BoostAODE supera a AODE incluso priorizando accuracy. \u03b1=0 indica que no hay ventaja de compresi\u00f3n. "Siempre" indica que BoostAODE gana para todo \u03b1.' },
-    { id: 'compression-hist', name: 'Histograma Compresi\u00f3n', icon: '\u25a5', description: 'Distribuci\u00f3n del ratio de compresi\u00f3n (n_spodes_BoostAODE / n_features). Valores bajos indican alta compresi\u00f3n (BoostAODE usa pocos SPODEs). Valor 1.0 indica sin compresi\u00f3n.' },
-    { id: 'compression-features', name: 'Compresi\u00f3n vs Features', icon: '\u25c9', description: 'Relaci\u00f3n entre el n\u00famero de features de cada dataset y el ratio de compresi\u00f3n alcanzado. Datasets con muchas features tienden a tener mayor compresi\u00f3n.' },
-    { id: 'timing', name: 'Comparaci\u00f3n Tiempos', icon: '\u23f1', description: 'Comparaci\u00f3n de tiempos de entrenamiento y predicci\u00f3n entre ambos clasificadores. Incluye barras resumen (medias globales) y scatter de tiempos por dataset.' },
-    { id: 'heatmap', name: 'Heatmap Ventaja CLC', icon: '\u25a6', description: 'Mapa de calor mostrando la diferencia media de CLC_\u03b1 (BoostAODE - AODE) por segmento de datos y valor de \u03b1. Verde indica ventaja de BoostAODE, rojo indica ventaja de AODE. Celdas con borde indican significancia estad\u00edstica (p < 0.05).' },
-    { id: 'radar', name: 'Radar Comparativo', icon: '\u2b21', description: 'Gr\u00e1fico radar comparando ambos clasificadores en 5 dimensiones: accuracy, simplicidad, compresi\u00f3n, velocidad de entrenamiento y velocidad de predicci\u00f3n. Cada eje est\u00e1 normalizado de 0 a 1.' },
-    { id: 'wins-by-alpha', name: 'Victorias por \u03b1', icon: '\u2197', description: 'Evoluci\u00f3n del n\u00famero de victorias y derrotas de BoostAODE en funci\u00f3n del par\u00e1metro \u03b1. La zona verde indica significancia estad\u00edstica (p < 0.05). L\u00ednea horizontal de referencia en 20 (50% de los datasets).' },
-    { id: 'clc-ranking', name: 'Ranking \u0394 CLC', icon: '\u25a4', description: 'Ranking de datasets ordenados por diferencia CLC_\u03b1 (BoostAODE - AODE). Barras verdes indican ventaja de BoostAODE, barras rojas indican ventaja de AODE.' },
-    { id: 'accuracy-distribution', name: 'Distribuci\u00f3n Accuracy', icon: '\u224b', description: 'Distribuci\u00f3n de accuracies medias de ambos clasificadores a trav\u00e9s de los 40 datasets. Cada punto es un dataset. Se muestra la media y mediana de cada clasificador.' }
+    { id: 'scatter-accuracy', nameKey: 'charts.name.scatterAccuracy', icon: '\u2299', descKey: 'charts.desc.scatterAccuracy' },
+    { id: 'scatter-pareto', nameKey: 'charts.name.scatterPareto', icon: '\u25c8', descKey: 'charts.desc.scatterPareto' },
+    { id: 'clc-boxplots', nameKey: 'charts.name.clcBoxplots', icon: '\u2610', descKey: 'charts.desc.clcBoxplots' },
+    { id: 'alpha-breakeven', nameKey: 'charts.name.alphaBreakeven', icon: '\u229e', descKey: 'charts.desc.alphaBreakeven' },
+    { id: 'compression-hist', nameKey: 'charts.name.compressionHist', icon: '\u25a5', descKey: 'charts.desc.compressionHist' },
+    { id: 'compression-features', nameKey: 'charts.name.compressionFeatures', icon: '\u25c9', descKey: 'charts.desc.compressionFeatures' },
+    { id: 'timing', nameKey: 'charts.name.timing', icon: '\u23f1', descKey: 'charts.desc.timing' },
+    { id: 'heatmap', nameKey: 'charts.name.heatmap', icon: '\u25a6', descKey: 'charts.desc.heatmap' },
+    { id: 'radar', nameKey: 'charts.name.radar', icon: '\u2b21', descKey: 'charts.desc.radar' },
+    { id: 'wins-by-alpha', nameKey: 'charts.name.winsByAlpha', icon: '\u2197', descKey: 'charts.desc.winsByAlpha' },
+    { id: 'clc-ranking', nameKey: 'charts.name.clcRanking', icon: '\u25a4', descKey: 'charts.desc.clcRanking' },
+    { id: 'accuracy-distribution', nameKey: 'charts.name.accuracyDist', icon: '\u224b', descKey: 'charts.desc.accuracyDist' }
 ];
 
 // ---------------------------------------------------------------------------
@@ -107,7 +107,7 @@ function downloadPNG() {
     var htmlEl = document.getElementById('chart-html');
     if (!htmlEl.classList.contains('hidden')) {
         // Use html2canvas-like fallback: just alert
-        alert('Para la tabla heatmap, usa captura de pantalla del navegador (Ctrl+Shift+S en Firefox).');
+        alert(i18n.t('charts.heatmap.screenshotMsg'));
         return;
     }
     if (!canvas) return;
@@ -170,7 +170,7 @@ function renderChartSelector() {
         btn.className = 'chart-selector-btn' + (chart.id === chartState.currentChart ? ' active' : '');
         btn.setAttribute('data-chart', chart.id);
         btn.innerHTML = '<span class="chart-selector-icon">' + chart.icon + '</span>' +
-                        '<span class="chart-selector-label">' + chart.name + '</span>';
+                        '<span class="chart-selector-label">' + i18n.t(chart.nameKey) + '</span>';
         btn.addEventListener('click', function() { selectChart(chart.id); });
         container.appendChild(btn);
     });
@@ -191,8 +191,8 @@ function renderChart(chartId) {
     var chartDef = CHARTS.find(function(c) { return c.id === chartId; });
     if (!chartDef) return;
 
-    document.getElementById('chart-title').textContent = chartDef.name;
-    document.getElementById('chart-description').textContent = chartDef.description;
+    document.getElementById('chart-title').textContent = i18n.t(chartDef.nameKey);
+    document.getElementById('chart-description').textContent = i18n.t(chartDef.descKey);
 
     // Toggle canvas vs HTML
     var wrapper = document.getElementById('chart-wrapper');
@@ -305,7 +305,7 @@ function renderScatterAccuracy() {
         data: {
             datasets: [
                 {
-                    label: 'BoostAODE gana',
+                    label: i18n.t('charts.legend.boostWins'),
                     data: above,
                     backgroundColor: hexToRgba(colors.positive, 0.7),
                     borderColor: colors.positive,
@@ -314,7 +314,7 @@ function renderScatterAccuracy() {
                     pointHoverRadius: 9
                 },
                 {
-                    label: 'AODE gana',
+                    label: i18n.t('charts.legend.aodeWins'),
                     data: below,
                     backgroundColor: hexToRgba(colors.negative, 0.7),
                     borderColor: colors.negative,
@@ -323,7 +323,7 @@ function renderScatterAccuracy() {
                     pointHoverRadius: 9
                 },
                 {
-                    label: 'Empate',
+                    label: i18n.t('charts.legend.tie'),
                     data: onLine,
                     backgroundColor: hexToRgba(colors.neutral, 0.7),
                     borderColor: colors.neutral,
@@ -357,13 +357,13 @@ function renderScatterAccuracy() {
             },
             scales: {
                 x: {
-                    title: { display: true, text: 'Accuracy AODE', color: colors.textSec, font: { size: 13 } },
+                    title: { display: true, text: i18n.t('charts.axis.accAODE'), color: colors.textSec, font: { size: 13 } },
                     min: lo, max: hi,
                     ticks: { color: colors.textMuted, font: { size: 11 } },
                     grid: { color: colors.gridDark }
                 },
                 y: {
-                    title: { display: true, text: 'Accuracy BoostAODE', color: colors.textSec, font: { size: 13 } },
+                    title: { display: true, text: i18n.t('charts.axis.accBoost'), color: colors.textSec, font: { size: 13 } },
                     min: lo, max: hi,
                     ticks: { color: colors.textMuted, font: { size: 11 } },
                     grid: { color: colors.gridDark }
@@ -425,7 +425,7 @@ function renderScatterPareto() {
         data: {
             datasets: [
                 {
-                    label: 'AODE',
+                    label: i18n.t('charts.legend.aode'),
                     data: aodeData,
                     backgroundColor: hexToRgba(colors.aode, 0.7),
                     borderColor: colors.aode,
@@ -434,7 +434,7 @@ function renderScatterPareto() {
                     pointHoverRadius: 9
                 },
                 {
-                    label: 'BoostAODE',
+                    label: i18n.t('charts.legend.boostaode'),
                     data: boostData,
                     backgroundColor: hexToRgba(colors.boostaode, 0.7),
                     borderColor: colors.boostaode,
@@ -467,13 +467,13 @@ function renderScatterPareto() {
             },
             scales: {
                 x: {
-                    title: { display: true, text: 'Accuracy', color: colors.textSec, font: { size: 13 } },
+                    title: { display: true, text: i18n.t('charts.axis.accuracy'), color: colors.textSec, font: { size: 13 } },
                     min: 0.5, max: 1.0,
                     ticks: { color: colors.textMuted, font: { size: 11 } },
                     grid: { color: colors.gridDark }
                 },
                 y: {
-                    title: { display: true, text: 'Simplicidad (1 - n_spodes/n_features)', color: colors.textSec, font: { size: 13 } },
+                    title: { display: true, text: i18n.t('charts.axis.simplicity'), color: colors.textSec, font: { size: 13 } },
                     min: -0.05, max: 1.0,
                     ticks: { color: colors.textMuted, font: { size: 11 } },
                     grid: { color: colors.gridDark }
@@ -513,10 +513,10 @@ function renderCLCBoxplots() {
     chartState.chartInstance = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['AODE', 'BoostAODE'],
+            labels: [i18n.t('charts.legend.aode'), i18n.t('charts.legend.boostaode')],
             datasets: [
                 {
-                    label: 'IQR (Q1-Q3)',
+                    label: i18n.t('charts.legend.iqr'),
                     data: [
                         [statsAode.q1, statsAode.q3],
                         [statsBoost.q1, statsBoost.q3]
@@ -528,7 +528,7 @@ function renderCLCBoxplots() {
                     categoryPercentage: 0.8
                 },
                 {
-                    label: 'Datasets (AODE)',
+                    label: i18n.t('charts.legend.datasetsAODE'),
                     type: 'scatter',
                     data: jitter(aodeVals, 0),
                     backgroundColor: hexToRgba(colors.aode, 0.6),
@@ -539,7 +539,7 @@ function renderCLCBoxplots() {
                     xAxisID: 'x'
                 },
                 {
-                    label: 'Datasets (BoostAODE)',
+                    label: i18n.t('charts.legend.datasetsBoost'),
                     type: 'scatter',
                     data: jitter(boostVals, 1),
                     backgroundColor: hexToRgba(colors.boostaode, 0.6),
@@ -588,12 +588,12 @@ function renderCLCBoxplots() {
             scales: {
                 x: {
                     type: 'category',
-                    labels: ['AODE', 'BoostAODE'],
+                    labels: [i18n.t('charts.legend.aode'), i18n.t('charts.legend.boostaode')],
                     ticks: { color: colors.textSec, font: { size: 13, weight: '600' } },
                     grid: { display: false }
                 },
                 y: {
-                    title: { display: true, text: 'CLC_\u03b1 (\u03b1=' + alpha + ')', color: colors.textSec, font: { size: 13 } },
+                    title: { display: true, text: i18n.t('charts.axis.clcAlpha') + ' (\u03b1=' + alpha + ')', color: colors.textSec, font: { size: 13 } },
                     ticks: { color: colors.textMuted, font: { size: 11 } },
                     grid: { color: colors.gridDark }
                 }
@@ -682,7 +682,7 @@ function renderAlphaBreakeven() {
     var ctx = document.getElementById('chart-canvas').getContext('2d');
 
     // Bins: 0, (0,0.1], (0.1,0.2], ..., (0.9,1.0], "Siempre"
-    var binLabels = ['0', '0-0.2', '0.2-0.4', '0.4-0.6', '0.6-0.8', '0.8-1.0', 'Siempre'];
+    var binLabels = [i18n.t('charts.breakeven.noBenefit'), '0-0.2', '0.2-0.4', '0.4-0.6', '0.6-0.8', '0.8-1.0', i18n.t('charts.breakeven.always')];
     var binCounts = [0, 0, 0, 0, 0, 0, 0];
 
     datasets.forEach(function(d) {
@@ -732,7 +732,7 @@ function renderAlphaBreakeven() {
         data: {
             labels: binLabels,
             datasets: [{
-                label: 'Datasets',
+                label: i18n.t('charts.axis.datasets'),
                 data: binCounts,
                 backgroundColor: barColors,
                 borderColor: borderColors,
@@ -762,12 +762,12 @@ function renderAlphaBreakeven() {
             },
             scales: {
                 x: {
-                    title: { display: true, text: '\u03b1 breakeven', color: colors.textSec, font: { size: 13 } },
+                    title: { display: true, text: i18n.t('charts.axis.alphaBreakeven'), color: colors.textSec, font: { size: 13 } },
                     ticks: { color: colors.textMuted, font: { size: 11 } },
                     grid: { display: false }
                 },
                 y: {
-                    title: { display: true, text: 'N\u00famero de datasets', color: colors.textSec, font: { size: 13 } },
+                    title: { display: true, text: i18n.t('charts.axis.nDatasets'), color: colors.textSec, font: { size: 13 } },
                     beginAtZero: true,
                     ticks: { color: colors.textMuted, font: { size: 11 }, stepSize: 2 },
                     grid: { color: colors.gridDark }
@@ -808,7 +808,7 @@ function renderCompressionHist() {
         data: {
             labels: binLabels,
             datasets: [{
-                label: 'Datasets',
+                label: i18n.t('charts.axis.datasets'),
                 data: binCounts,
                 backgroundColor: barColors,
                 borderColor: colors.boostaode,
@@ -838,12 +838,12 @@ function renderCompressionHist() {
             },
             scales: {
                 x: {
-                    title: { display: true, text: 'Ratio de compresi\u00f3n (n_spodes / n_features)', color: colors.textSec, font: { size: 13 } },
+                    title: { display: true, text: i18n.t('charts.axis.compressionRatio'), color: colors.textSec, font: { size: 13 } },
                     ticks: { color: colors.textMuted, font: { size: 11 } },
                     grid: { display: false }
                 },
                 y: {
-                    title: { display: true, text: 'N\u00famero de datasets', color: colors.textSec, font: { size: 13 } },
+                    title: { display: true, text: i18n.t('charts.axis.nDatasets'), color: colors.textSec, font: { size: 13 } },
                     beginAtZero: true,
                     ticks: { color: colors.textMuted, font: { size: 11 }, stepSize: 2 },
                     grid: { color: colors.gridDark }
@@ -892,7 +892,7 @@ function renderCompressionFeatures() {
         type: 'bubble',
         data: {
             datasets: [{
-                label: 'Datasets',
+                label: i18n.t('charts.axis.datasets'),
                 data: points,
                 backgroundColor: pointColors,
                 borderColor: colors.boostaode,
@@ -930,12 +930,12 @@ function renderCompressionFeatures() {
             scales: {
                 x: {
                     type: 'logarithmic',
-                    title: { display: true, text: 'N\u00famero de features (escala log)', color: colors.textSec, font: { size: 13 } },
+                    title: { display: true, text: i18n.t('charts.axis.nFeaturesLog'), color: colors.textSec, font: { size: 13 } },
                     ticks: { color: colors.textMuted, font: { size: 11 } },
                     grid: { color: colors.gridDark }
                 },
                 y: {
-                    title: { display: true, text: 'Ratio de compresi\u00f3n', color: colors.textSec, font: { size: 13 } },
+                    title: { display: true, text: i18n.t('charts.axis.compressionRatioShort'), color: colors.textSec, font: { size: 13 } },
                     min: 0, max: 1.1,
                     ticks: { color: colors.textMuted, font: { size: 11 } },
                     grid: { color: colors.gridDark }
@@ -989,7 +989,7 @@ function renderTiming() {
 
     var mean = function(arr) { return arr.reduce(function(s, v) { return s + v; }, 0) / arr.length; };
 
-    var summaryLabels = ['Entrenamiento', 'Predicci\u00f3n'];
+    var summaryLabels = [i18n.t('charts.timing.training'), i18n.t('charts.timing.prediction')];
     var aodeMeans = [mean(allAodeTrain), mean(allAodePredict)];
     var boostMeans = [mean(allBoostTrain), mean(allBoostPredict)];
 
@@ -999,7 +999,7 @@ function renderTiming() {
             labels: summaryLabels,
             datasets: [
                 {
-                    label: 'AODE',
+                    label: i18n.t('charts.legend.aode'),
                     data: aodeMeans,
                     backgroundColor: hexToRgba(colors.aode, 0.7),
                     borderColor: colors.aode,
@@ -1007,7 +1007,7 @@ function renderTiming() {
                     borderRadius: 4
                 },
                 {
-                    label: 'BoostAODE',
+                    label: i18n.t('charts.legend.boostaode'),
                     data: boostMeans,
                     backgroundColor: hexToRgba(colors.boostaode, 0.7),
                     borderColor: colors.boostaode,
@@ -1041,7 +1041,7 @@ function renderTiming() {
             },
             scales: {
                 x: {
-                    title: { display: true, text: 'Tiempo medio (segundos)', color: colors.textSec, font: { size: 13 } },
+                    title: { display: true, text: i18n.t('charts.axis.meanTime'), color: colors.textSec, font: { size: 13 } },
                     beginAtZero: true,
                     ticks: { color: colors.textMuted, font: { size: 11 } },
                     grid: { color: colors.gridDark }
@@ -1066,11 +1066,11 @@ function renderHeatmap() {
 
     var segmentNames = ['all', 'high_dim', 'low_dim', 'small', 'large'];
     var segmentLabels = {
-        'all': 'Todos (40)',
-        'high_dim': 'Alta dimensi\u00f3n (9)',
-        'low_dim': 'Baja dimensi\u00f3n (31)',
-        'small': 'Peque\u00f1os (17)',
-        'large': 'Grandes (23)'
+        'all': i18n.t('charts.heatmap.all') + ' (40)',
+        'high_dim': i18n.t('charts.heatmap.highDim') + ' (9)',
+        'low_dim': i18n.t('charts.heatmap.lowDim') + ' (31)',
+        'small': i18n.t('charts.heatmap.small') + ' (17)',
+        'large': i18n.t('charts.heatmap.large') + ' (23)'
     };
     var alphas = ['0.5', '0.6', '0.7', '0.8', '0.9', '1.0'];
 
@@ -1088,7 +1088,7 @@ function renderHeatmap() {
     });
 
     var html = '<table class="heatmap-table">';
-    html += '<thead><tr><th>Segmento</th>';
+    html += '<thead><tr><th>' + i18n.t('charts.heatmap.segment') + '</th>';
     alphas.forEach(function(a) {
         html += '<th>\u03b1 = ' + a + '</th>';
     });
@@ -1123,7 +1123,7 @@ function renderHeatmap() {
     });
 
     html += '</tbody></table>';
-    html += '<p style="margin-top:8px; font-size:0.75rem; color:var(--text-muted);">* Significancia estad\u00edstica (p &lt; 0.05). Borde en celdas significativas.</p>';
+    html += '<p style="margin-top:8px; font-size:0.75rem; color:var(--text-muted);">' + i18n.t('charts.heatmap.footnote') + '</p>';
     htmlEl.innerHTML = html;
 }
 
@@ -1184,10 +1184,10 @@ function renderRadar() {
     chartState.chartInstance = new Chart(ctx, {
         type: 'radar',
         data: {
-            labels: ['Accuracy', 'Simplicidad', 'Compresi\u00f3n', 'Vel. Entrenamiento', 'Vel. Predicci\u00f3n'],
+            labels: [i18n.t('charts.radar.accuracy'), i18n.t('charts.radar.simplicity'), i18n.t('charts.radar.compression'), i18n.t('charts.radar.trainSpeed'), i18n.t('charts.radar.predictSpeed')],
             datasets: [
                 {
-                    label: 'AODE',
+                    label: i18n.t('charts.legend.aode'),
                     data: [meanAccAode, 0, 0, trainSpeedAode, predictSpeedAode],
                     backgroundColor: hexToRgba(colors.aode, 0.15),
                     borderColor: colors.aode,
@@ -1197,7 +1197,7 @@ function renderRadar() {
                     pointRadius: 4
                 },
                 {
-                    label: 'BoostAODE',
+                    label: i18n.t('charts.legend.boostaode'),
                     data: [meanAccBoost, meanSimplicity, meanCompression, trainSpeedBoost, predictSpeedBoost],
                     backgroundColor: hexToRgba(colors.boostaode, 0.15),
                     borderColor: colors.boostaode,
@@ -1292,7 +1292,7 @@ function renderWinsByAlpha() {
             labels: alphaLabels,
             datasets: [
                 {
-                    label: 'Victorias BoostAODE',
+                    label: i18n.t('charts.legend.winsBoost'),
                     data: winData,
                     borderColor: colors.positive,
                     backgroundColor: hexToRgba(colors.positive, 0.1),
@@ -1304,7 +1304,7 @@ function renderWinsByAlpha() {
                     tension: 0.2
                 },
                 {
-                    label: 'Derrotas BoostAODE',
+                    label: i18n.t('charts.legend.lossesBoost'),
                     data: lossData,
                     borderColor: hexToRgba(colors.negative, 0.5),
                     backgroundColor: hexToRgba(colors.negative, 0.05),
@@ -1337,7 +1337,7 @@ function renderWinsByAlpha() {
                         afterBody: function(ctx) {
                             var idx = ctx[0].dataIndex;
                             var p = pValues[idx];
-                            var sig = p < 0.05 ? 'Significativo' : 'No significativo';
+                            var sig = p < 0.05 ? i18n.t('charts.legend.significant') : i18n.t('charts.legend.notSignificant');
                             return ['p-value: ' + (p < 0.001 ? '< 0.001' : p.toFixed(4)), sig];
                         }
                     }
@@ -1345,12 +1345,12 @@ function renderWinsByAlpha() {
             },
             scales: {
                 x: {
-                    title: { display: true, text: 'Valor de \u03b1', color: colors.textSec, font: { size: 13 } },
+                    title: { display: true, text: i18n.t('charts.axis.alphaValue'), color: colors.textSec, font: { size: 13 } },
                     ticks: { color: colors.textMuted, font: { size: 11 } },
                     grid: { color: colors.gridDark }
                 },
                 y: {
-                    title: { display: true, text: 'N\u00famero de datasets', color: colors.textSec, font: { size: 13 } },
+                    title: { display: true, text: i18n.t('charts.axis.nDatasets'), color: colors.textSec, font: { size: 13 } },
                     min: 0,
                     max: 40,
                     ticks: { color: colors.textMuted, font: { size: 11 }, stepSize: 5 },
@@ -1439,7 +1439,7 @@ function renderCLCRanking() {
         data: {
             labels: labels,
             datasets: [{
-                label: '\u0394 CLC_\u03b1 (BoostAODE - AODE)',
+                label: i18n.t('charts.legend.deltaCLC'),
                 data: diffs,
                 backgroundColor: barColors,
                 borderColor: borderCols,
@@ -1471,7 +1471,7 @@ function renderCLCRanking() {
             },
             scales: {
                 x: {
-                    title: { display: true, text: '\u0394 CLC_\u03b1 (\u03b1=' + alpha + ')', color: colors.textSec, font: { size: 13 } },
+                    title: { display: true, text: i18n.t('charts.axis.deltaCLCAlpha') + ' (\u03b1=' + alpha + ')', color: colors.textSec, font: { size: 13 } },
                     ticks: { color: colors.textMuted, font: { size: 11 } },
                     grid: { color: colors.gridDark }
                 },
@@ -1533,7 +1533,7 @@ function renderAccuracyDistribution() {
         data: {
             datasets: [
                 {
-                    label: 'AODE',
+                    label: i18n.t('charts.legend.aode'),
                     data: jitter(aodeAccs, 0),
                     backgroundColor: hexToRgba(colors.aode, 0.6),
                     borderColor: colors.aode,
@@ -1542,7 +1542,7 @@ function renderAccuracyDistribution() {
                     pointHoverRadius: 8
                 },
                 {
-                    label: 'BoostAODE',
+                    label: i18n.t('charts.legend.boostaode'),
                     data: jitter(boostAccs, 1),
                     backgroundColor: hexToRgba(colors.boostaode, 0.6),
                     borderColor: colors.boostaode,
@@ -1583,8 +1583,8 @@ function renderAccuracyDistribution() {
                     max: 1.5,
                     ticks: {
                         callback: function(val) {
-                            if (val === 0) return 'AODE';
-                            if (val === 1) return 'BoostAODE';
+                            if (val === 0) return i18n.t('charts.legend.aode');
+                            if (val === 1) return i18n.t('charts.legend.boostaode');
                             return '';
                         },
                         color: colors.textSec,
@@ -1593,7 +1593,7 @@ function renderAccuracyDistribution() {
                     grid: { display: false }
                 },
                 y: {
-                    title: { display: true, text: 'Accuracy', color: colors.textSec, font: { size: 13 } },
+                    title: { display: true, text: i18n.t('charts.axis.accuracy'), color: colors.textSec, font: { size: 13 } },
                     ticks: { color: colors.textMuted, font: { size: 11 } },
                     grid: { color: colors.gridDark }
                 }
@@ -1674,10 +1674,24 @@ document.addEventListener('DOMContentLoaded', async function() {
     var ok = await AppData.loadAll();
     if (!ok) {
         hideLoading();
-        document.getElementById('chart-title').textContent = 'Error al cargar los datos';
+        document.getElementById('chart-title').textContent = i18n.t('charts.errorLoading');
         return;
     }
     renderChartSelector();
     selectChart('scatter-accuracy');
     hideLoading();
+
+    document.addEventListener('langchange', function() {
+        renderChartSelector();
+        // Re-render current chart title and description
+        var chart = CHARTS.find(function(c) { return c.id === chartState.currentChart; });
+        if (chart) {
+            var titleEl = document.getElementById('chart-title');
+            var descEl = document.getElementById('chart-description');
+            if (titleEl) titleEl.textContent = i18n.t(chart.nameKey);
+            if (descEl) descEl.textContent = i18n.t(chart.descKey);
+        }
+        // Re-render the chart itself to update axis labels and legends
+        renderChart(chartState.currentChart);
+    });
 });

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gr&aacute;ficos - BoostAODE vs AODE</title>
+    <title data-i18n="charts.title">Charts - BoostAODE vs AODE</title>
     <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
@@ -33,7 +33,7 @@
                         <rect x="3" y="14" width="7" height="7"></rect>
                         <rect x="14" y="14" width="7" height="7"></rect>
                     </svg>
-                    Resultados
+                    <span data-i18n="nav.results">Results</span>
                 </a>
                 <a href="charts.html" class="nav-link active">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -41,7 +41,7 @@
                         <line x1="12" y1="20" x2="12" y2="4"></line>
                         <line x1="6" y1="20" x2="6" y2="14"></line>
                     </svg>
-                    Gr&aacute;ficos
+                    <span data-i18n="nav.charts">Charts</span>
                 </a>
                 <a href="ai-prompt.html" class="nav-link">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -49,12 +49,12 @@
                         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
                         <line x1="12" y1="17" x2="12.01" y2="17"></line>
                     </svg>
-                    Consulta IA
+                    <span data-i18n="nav.ai">AI Query</span>
                 </a>
             </div>
 
             <div class="navbar-actions">
-                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema">
+                <button class="theme-toggle" onclick="toggleTheme()" data-i18n-title="nav.themeTitle" aria-label="Toggle theme">
                     <svg id="icon-sun" class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="5"></circle>
                         <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -70,6 +70,11 @@
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
                 </button>
+                <div class="lang-toggle">
+                    <button class="btn-lang-opt" data-lang="es">ES</button>
+                    <span class="lang-divider"></span>
+                    <button class="btn-lang-opt" data-lang="en">EN</button>
+                </div>
             </div>
         </div>
     </nav>
@@ -81,8 +86,8 @@
 
         <!-- Page Header -->
         <div class="page-header">
-            <h1>Gr&aacute;ficos Interactivos</h1>
-            <p>Visualizaci&oacute;n de resultados BoostAODE vs AODE</p>
+            <h1 data-i18n="charts.header">Interactive Charts</h1>
+            <p data-i18n="charts.subtitle">BoostAODE vs AODE results visualization</p>
         </div>
 
         <!-- Two-column Layout -->
@@ -91,7 +96,7 @@
             <!-- Sidebar: Chart Selector -->
             <aside class="sidebar">
                 <div class="card" style="padding: var(--spacing-md);">
-                    <h3 style="font-size: var(--font-size-sm); font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--spacing-sm);">Tipo de gr&aacute;fico</h3>
+                    <h3 style="font-size: var(--font-size-sm); font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--spacing-sm);" data-i18n="charts.sidebarTitle">Chart type</h3>
                     <div class="chart-selector" id="chart-selector">
                         <!-- Populated by JS -->
                     </div>
@@ -101,7 +106,7 @@
             <!-- Main: Chart Area -->
             <div class="chart-area">
                 <div class="chart-container" id="chart-container">
-                    <button class="chart-download" id="chart-download" onclick="downloadPNG()" title="Descargar como PNG">
+                    <button class="chart-download" id="chart-download" onclick="downloadPNG()" data-i18n-title="common.downloadPNG" title="Download as PNG">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                             <polyline points="7 10 12 15 17 10"></polyline>
@@ -109,7 +114,7 @@
                         </svg>
                         PNG
                     </button>
-                    <h2 class="chart-title" id="chart-title">Cargando...</h2>
+                    <h2 class="chart-title" id="chart-title" data-i18n="charts.loading">Loading...</h2>
                     <div class="chart-controls" id="chart-controls">
                         <!-- Populated by JS when needed -->
                     </div>
@@ -130,7 +135,7 @@
          ==================================================================== -->
     <footer class="footer">
         <div class="footer-inner">
-            <p>BoostAODE vs AODE &mdash; Experimento de comparaci&oacute;n pareada &mdash; 40 datasets, 5-fold &times; 5 repeticiones</p>
+            <p data-i18n="footer.text">BoostAODE vs AODE &mdash; Paired comparison experiment &mdash; 40 datasets, 5-fold &times; 5 repetitions</p>
         </div>
     </footer>
 
@@ -139,7 +144,7 @@
          ==================================================================== -->
     <div class="loading-overlay" id="loading-overlay">
         <div class="spinner spinner-lg"></div>
-        <div class="loading-text">Cargando datos experimentales...</div>
+        <div class="loading-text" data-i18n="common.loadingExperimental">Loading experimental data...</div>
     </div>
 
     <!-- ====================================================================
@@ -148,6 +153,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/theme.js"></script>
     <script src="js/data.js"></script>
+    <script src="js/i18n.js"></script>
     <script src="js/charts-page.js"></script>
 
 </body>

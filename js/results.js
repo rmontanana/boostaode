@@ -32,8 +32,8 @@ async function init() {
 
     if (!ok) {
         document.getElementById('main-content').innerHTML =
-            '<div class="empty-state"><div class="empty-state-title">Error cargando datos</div>' +
-            '<div class="empty-state-text">No se pudieron cargar los archivos JSON. Comprueba que existen en la carpeta data/.</div></div>';
+            '<div class="empty-state"><div class="empty-state-title">' + i18n.t('common.errorLoading') + '</div>' +
+            '<div class="empty-state-text">' + i18n.t('common.errorLoadingDesc') + '</div></div>';
         return;
     }
 
@@ -42,6 +42,14 @@ async function init() {
     renderSummaryTable();
     renderStatisticalTests();
     renderSegmentedAnalysis();
+
+    document.addEventListener('langchange', function() {
+        renderStatsCards();
+        renderSummaryTable();
+        renderRawTable();
+        renderStatisticalTests();
+        renderSegmentedAnalysis();
+    });
 }
 
 function setupEventListeners() {
@@ -116,7 +124,7 @@ function renderStatsCards() {
     var card1Value = document.getElementById('stat-datasets-value');
     var card1Label = document.getElementById('stat-datasets-label');
     if (card1Value) card1Value.textContent = nDatasets;
-    if (card1Label) card1Label.textContent = '5-fold \u00d7 5 repeticiones';
+    if (card1Label) card1Label.textContent = i18n.t('results.statDatasetsLabel');
 
     // Card 2: Accuracy media
     var card2Value = document.getElementById('stat-accuracy-value');
@@ -126,7 +134,7 @@ function renderStatsCards() {
             ' <span class="text-muted text-sm">vs</span> ' +
             formatNumber(stats.mean_accuracy.BoostAODE, 4);
     }
-    if (card2Label) card2Label.textContent = 'AODE vs BoostAODE';
+    if (card2Label) card2Label.textContent = i18n.t('results.statAccuracyLabel');
 
     // Card 3: CLC a=0.5
     renderCLCCard();
@@ -166,7 +174,7 @@ function renderCLCCard() {
                 formatNumber(sumBoost / count, 4);
         }
     }
-    if (card3Label) card3Label.textContent = 'CLC \u03b1=' + alpha + ' (AODE vs BoostAODE)';
+    if (card3Label) card3Label.textContent = i18n.t('results.statCLCLabel', alpha);
 }
 
 function renderWTLCard() {
@@ -198,7 +206,7 @@ function renderWTLCard() {
                 ' / <span class="text-muted">' + t + '</span>' +
                 ' / <span class="text-error">' + l + '</span>';
         }
-        if (card4Label) card4Label.textContent = 'Wins / Ties / Losses (CLC \u03b1=' + alpha + ')';
+        if (card4Label) card4Label.textContent = i18n.t('results.statWTLLabel', alpha);
         if (card4Bar) {
             card4Bar.innerHTML =
                 '<div class="progress-bar" style="margin-top:6px">' +
@@ -286,19 +294,19 @@ function renderSummaryTable() {
 
     // Build header
     var columns = [
-        { key: 'dataset', label: 'Dataset' },
-        { key: 'n_samples', label: 'Muestras' },
-        { key: 'n_features', label: 'Features' },
-        { key: 'n_classes', label: 'Clases' },
-        { key: 'acc_AODE', label: 'Acc AODE' },
-        { key: 'acc_BoostAODE', label: 'Acc BoostAODE' },
-        { key: 'acc_diff', label: '\u0394 Acc' },
-        { key: 'n_spodes_BoostAODE', label: 'SPODEs Boost' },
-        { key: 'compression_ratio', label: 'Compresi\u00f3n' },
-        { key: 'clc_AODE', label: 'CLC AODE' },
-        { key: 'clc_BoostAODE', label: 'CLC Boost' },
-        { key: 'clc_diff', label: '\u0394 CLC' },
-        { key: 'alpha_breakeven', label: '\u03b1 breakeven' }
+        { key: 'dataset', label: i18n.t('results.colDataset') },
+        { key: 'n_samples', label: i18n.t('results.colSamples') },
+        { key: 'n_features', label: i18n.t('results.colFeatures') },
+        { key: 'n_classes', label: i18n.t('results.colClasses') },
+        { key: 'acc_AODE', label: i18n.t('results.colAccAODE') },
+        { key: 'acc_BoostAODE', label: i18n.t('results.colAccBoost') },
+        { key: 'acc_diff', label: i18n.t('results.colAccDiff') },
+        { key: 'n_spodes_BoostAODE', label: i18n.t('results.colSPODEs') },
+        { key: 'compression_ratio', label: i18n.t('results.colCompression') },
+        { key: 'clc_AODE', label: i18n.t('results.colCLCAODE') },
+        { key: 'clc_BoostAODE', label: i18n.t('results.colCLCBoost') },
+        { key: 'clc_diff', label: i18n.t('results.colCLCDiff') },
+        { key: 'alpha_breakeven', label: i18n.t('results.colAlphaBreak') }
     ];
 
     var thead = '<thead><tr>';
@@ -336,7 +344,7 @@ function renderSummaryTable() {
         tbody += '</tr>';
     }
     if (pageData.length === 0) {
-        tbody += '<tr><td colspan="' + columns.length + '" class="text-center text-muted" style="padding:24px">No se encontraron resultados</td></tr>';
+        tbody += '<tr><td colspan="' + columns.length + '" class="text-center text-muted" style="padding:24px">' + i18n.t('common.noResults') + '</td></tr>';
     }
     tbody += '</tbody>';
 
@@ -420,15 +428,15 @@ function renderRawTable() {
     var pageData = data.slice(start, end);
 
     var columns = [
-        { key: 'dataset', label: 'Dataset' },
-        { key: 'classifier', label: 'Clasificador' },
-        { key: 'fold', label: 'Fold' },
-        { key: 'repetition', label: 'Rep' },
-        { key: 'seed', label: 'Seed' },
-        { key: 'accuracy', label: 'Accuracy' },
-        { key: 'n_spodes', label: 'n SPODEs' },
-        { key: 'train_time', label: 'Train Time (s)' },
-        { key: 'predict_time', label: 'Predict Time (s)' }
+        { key: 'dataset', label: i18n.t('results.colDataset') },
+        { key: 'classifier', label: i18n.t('results.colClassifier') },
+        { key: 'fold', label: i18n.t('results.colFold') },
+        { key: 'repetition', label: i18n.t('results.colRep') },
+        { key: 'seed', label: i18n.t('results.colSeed') },
+        { key: 'accuracy', label: i18n.t('common.accuracy') },
+        { key: 'n_spodes', label: i18n.t('results.colNSpodes') },
+        { key: 'train_time', label: i18n.t('results.colTrainTime') },
+        { key: 'predict_time', label: i18n.t('results.colPredictTime') }
     ];
 
     var thead = '<thead><tr>';
@@ -462,7 +470,7 @@ function renderRawTable() {
         tbody += '</tr>';
     }
     if (pageData.length === 0) {
-        tbody += '<tr><td colspan="' + columns.length + '" class="text-center text-muted" style="padding:24px">No se encontraron resultados</td></tr>';
+        tbody += '<tr><td colspan="' + columns.length + '" class="text-center text-muted" style="padding:24px">' + i18n.t('common.noResults') + '</td></tr>';
     }
     tbody += '</tbody>';
 
@@ -504,14 +512,14 @@ function renderStatisticalTests() {
     if (!container) return;
 
     var thead = '<thead><tr>' +
-        '<th>M\u00e9trica</th>' +
-        '<th>Estad\u00edstico W</th>' +
-        '<th>p-valor</th>' +
-        '<th>Significativo</th>' +
-        '<th>Wins</th>' +
-        '<th>Ties</th>' +
-        '<th>Losses</th>' +
-        '<th>W/T/L</th>' +
+        '<th>' + i18n.t('results.colMetric') + '</th>' +
+        '<th>' + i18n.t('results.colStatW') + '</th>' +
+        '<th>' + i18n.t('results.colPValue') + '</th>' +
+        '<th>' + i18n.t('results.colSignificant') + '</th>' +
+        '<th>' + i18n.t('results.colWins') + '</th>' +
+        '<th>' + i18n.t('results.colTies') + '</th>' +
+        '<th>' + i18n.t('results.colLosses') + '</th>' +
+        '<th>' + i18n.t('results.colWTL') + '</th>' +
         '</tr></thead>';
 
     var tbody = '<tbody>';
@@ -565,23 +573,23 @@ function renderSegmentedAnalysis() {
     }
 
     var segmentLabels = {
-        'all': 'Todos',
-        'high_dim': 'Alta Dimensionalidad',
-        'low_dim': 'Baja Dimensionalidad',
-        'small': 'Peque\u00f1os',
-        'large': 'Grandes'
+        'all': i18n.t('results.segLabelAll'),
+        'high_dim': i18n.t('results.segLabelHighDim'),
+        'low_dim': i18n.t('results.segLabelLowDim'),
+        'small': i18n.t('results.segLabelSmall'),
+        'large': i18n.t('results.segLabelLarge')
     };
 
     var thead = '<thead><tr>' +
-        '<th>Segmento</th>' +
-        '<th>n Datasets</th>' +
-        '<th>\u03b1</th>' +
-        '<th>p-valor</th>' +
-        '<th>Sig?</th>' +
-        '<th>Wins</th>' +
-        '<th>Ties</th>' +
-        '<th>Losses</th>' +
-        '<th>\u0394 CLC medio</th>' +
+        '<th>' + i18n.t('results.colSegment') + '</th>' +
+        '<th>' + i18n.t('results.colNDatasets') + '</th>' +
+        '<th>' + i18n.t('results.colAlpha') + '</th>' +
+        '<th>' + i18n.t('results.colPValue') + '</th>' +
+        '<th>' + i18n.t('results.colSig') + '</th>' +
+        '<th>' + i18n.t('results.colWins') + '</th>' +
+        '<th>' + i18n.t('results.colTies') + '</th>' +
+        '<th>' + i18n.t('results.colLosses') + '</th>' +
+        '<th>' + i18n.t('results.colMeanCLCDiff') + '</th>' +
         '</tr></thead>';
 
     var tbody = '<tbody>';
@@ -742,7 +750,7 @@ function renderPagination(containerId, currentPage, totalPages, totalItems, onPa
 
     if (totalPages <= 1) {
         container.innerHTML = '<div class="text-sm text-muted text-center" style="padding:8px">' +
-            totalItems + ' resultado' + (totalItems !== 1 ? 's' : '') + '</div>';
+            i18n.t('results.pagination', totalItems, currentPage, totalPages) + '</div>';
         return;
     }
 
@@ -774,8 +782,7 @@ function renderPagination(containerId, currentPage, totalPages, totalItems, onPa
 
     html += '</div>';
     html += '<div class="text-sm text-muted text-center">' +
-        totalItems + ' resultado' + (totalItems !== 1 ? 's' : '') + ' \u2014 P\u00e1gina ' +
-        currentPage + ' de ' + totalPages + '</div>';
+        i18n.t('results.pagination', totalItems, currentPage, totalPages) + '</div>';
 
     container.innerHTML = html;
 
@@ -840,7 +847,7 @@ function csvEscape(str) {
 
 function formatInt(n) {
     if (n === null || n === undefined) return '\u2014';
-    return Number(n).toLocaleString('es-ES');
+    return Number(n).toLocaleString(i18n.getLang() === 'es' ? 'es-ES' : 'en-US');
 }
 
 function formatDiff(n) {

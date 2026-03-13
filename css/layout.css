@@ -159,6 +159,73 @@
 }
 
 /* --------------------------------------------------------------------------
+   Language Toggle
+   -------------------------------------------------------------------------- */
+
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-left: var(--spacing-xs);
+}
+
+.btn-lang-opt {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: all var(--transition-fast);
+}
+
+.btn-lang-opt::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 2px;
+}
+
+/* Spanish flag */
+.btn-lang-opt[data-lang="es"]::before {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 500"><rect width="750" height="500" fill="%23c60b1e"/><rect width="750" height="250" y="125" fill="%23ffc400"/></svg>');
+}
+
+/* UK flag */
+.btn-lang-opt[data-lang="en"]::before {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30"><path d="M0,0 v30 h60 v-30 z" fill="%23012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="%23fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="%23C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="%23fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="%23C8102E" stroke-width="6"/></svg>');
+}
+
+.btn-lang-opt.active {
+  background: var(--accent-primary);
+  color: white;
+}
+
+.btn-lang-opt:hover:not(.active) {
+  background: var(--bg-hover);
+  color: var(--accent-primary);
+}
+
+.lang-divider {
+  width: 1px;
+  height: 12px;
+  background-color: var(--border-color);
+  margin: 0 2px;
+}
+
+/* --------------------------------------------------------------------------
    Container
    -------------------------------------------------------------------------- */
 

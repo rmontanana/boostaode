@@ -10,15 +10,6 @@ const promptState = {
     generatedPrompt: ''
 };
 
-const exampleQuestions = [
-    "\u00bfEn qu\u00e9 datasets BoostAODE supera significativamente a AODE en accuracy?",
-    "\u00bfCu\u00e1l es el valor de \u03b1 breakeven t\u00edpico y qu\u00e9 significa para la elecci\u00f3n entre clasificadores?",
-    "Analiza la relaci\u00f3n entre la dimensionalidad del dataset y la ventaja de BoostAODE",
-    "\u00bfEn qu\u00e9 escenarios no merece la pena usar BoostAODE frente a AODE?",
-    "Resume los resultados principales respondiendo a las preguntas de investigaci\u00f3n RQ1-RQ5",
-    "\u00bfC\u00f3mo afecta el tama\u00f1o del dataset a la compresi\u00f3n que consigue BoostAODE?"
-];
-
 let debounceTimer = null;
 
 /* --------------------------------------------------------------------------
@@ -58,7 +49,8 @@ function init() {
     // Example question chips
     document.querySelectorAll('.example-chip').forEach(function(chip) {
         chip.addEventListener('click', function() {
-            var q = this.getAttribute('data-question');
+            var key = this.getAttribute('data-question-key');
+            var q = key ? i18n.t(key) : this.getAttribute('data-question');
             setQuestion(q);
         });
     });
@@ -105,22 +97,16 @@ function buildPrompt() {
 
     var questionSection = promptState.question.trim()
         ? promptState.question.trim()
-        : '(Escribe tu pregunta arriba)';
+        : i18n.t('ai.promptWriteAbove');
 
     var prompt =
-        'Eres un experto en machine learning y clasificadores bayesianos. Analiza los siguientes resultados experimentales y responde la pregunta del usuario.\n\n' +
-        '## Contexto del Experimento\n' +
-        'Se compara BoostAODE (ensemble boosted de SPODEs que selecciona un subconjunto de super-parents) contra AODE (Averaged One-Dependence Estimators, que usa todos los features como super-parents).\n' +
-        '- 40 datasets de OpenML\n' +
-        '- Validaci\u00f3n cruzada estratificada: 5 folds \u00d7 5 repeticiones\n' +
-        '- Semillas: [42, 123, 456, 789, 1024]\n' +
-        '- M\u00e9trica principal: CLC_\u03b1 = \u03b1 \u00d7 accuracy + (1 - \u03b1) \u00d7 (1 - n_spodes / n_features)\n' +
-        '- Valores de \u03b1 analizados: 0.5, 0.6, 0.7, 0.8, 0.9, 1.0\n\n' +
-        '## Datos\n' +
+        i18n.t('ai.promptIntro') + '\n\n' +
+        i18n.t('ai.promptContext') + '\n\n' +
+        i18n.t('ai.promptData') + '\n' +
         dataSection + '\n\n' +
-        '## Pregunta\n' +
+        i18n.t('ai.promptQuestion') + '\n' +
         questionSection + '\n\n' +
-        'Responde en espa\u00f1ol con an\u00e1lisis detallado, referencias a los datos y conclusiones fundamentadas.';
+        i18n.t('ai.promptOutro');
 
     return prompt;
 }
@@ -130,7 +116,7 @@ function buildPrompt() {
    -------------------------------------------------------------------------- */
 
 function buildBasicContext() {
-    if (!AppData.loaded) return '(Datos no cargados)';
+    if (!AppData.loaded) return i18n.t('ai.ctx.notLoaded');
 
     var summary = AppData.summary;
     var tests = AppData.tests;
@@ -140,18 +126,18 @@ function buildBasicContext() {
     var lines = [];
 
     // Global stats
-    lines.push('### Estad\u00edsticas Globales');
-    lines.push('- N\u00famero de datasets: ' + summary.dataset_list.length);
-    lines.push('- Clasificadores: AODE, BoostAODE');
-    lines.push('- Folds: ' + summary.config.n_folds + ', Repeticiones: ' + summary.config.n_repetitions);
-    lines.push('- Accuracy media AODE: ' + summary.global_stats.mean_accuracy.AODE.toFixed(4));
-    lines.push('- Accuracy media BoostAODE: ' + summary.global_stats.mean_accuracy.BoostAODE.toFixed(4));
-    lines.push('- CLC_0.5 media AODE: ' + summary.global_stats['mean_CLC_0.5'].AODE.toFixed(4));
-    lines.push('- CLC_0.5 media BoostAODE: ' + summary.global_stats['mean_CLC_0.5'].BoostAODE.toFixed(4));
+    lines.push(i18n.t('ai.ctx.globalStats'));
+    lines.push(i18n.t('ai.ctx.numDatasets') + summary.dataset_list.length);
+    lines.push(i18n.t('ai.ctx.classifiers'));
+    lines.push(i18n.t('ai.ctx.foldsReps', summary.config.n_folds, summary.config.n_repetitions));
+    lines.push(i18n.t('ai.ctx.meanAccAODE') + summary.global_stats.mean_accuracy.AODE.toFixed(4));
+    lines.push(i18n.t('ai.ctx.meanAccBoost') + summary.global_stats.mean_accuracy.BoostAODE.toFixed(4));
+    lines.push(i18n.t('ai.ctx.meanCLC05AODE') + summary.global_stats['mean_CLC_0.5'].AODE.toFixed(4));
+    lines.push(i18n.t('ai.ctx.meanCLC05Boost') + summary.global_stats['mean_CLC_0.5'].BoostAODE.toFixed(4));
     lines.push('');
 
     // Wins/Ties/Losses
-    lines.push('### Wins/Ties/Losses (BoostAODE vs AODE)');
+    lines.push(i18n.t('ai.ctx.wtlTitle'));
     if (tests && tests.tests) {
         tests.tests.forEach(function(t) {
             var sig = t.significant ? ' ***' : ' (NS)';
@@ -162,7 +148,7 @@ function buildBasicContext() {
     lines.push('');
 
     // Segment highlights
-    lines.push('### Resultados por Segmento (CLC_0.5)');
+    lines.push(i18n.t('ai.ctx.segTitle'));
     if (segmented && segmented.segments) {
         var alpha05 = segmented.segments.filter(function(s) { return s.alpha === 0.5; });
         alpha05.forEach(function(s) {
@@ -185,9 +171,8 @@ function buildBasicContext() {
             }
         });
         var meanCR = countCR > 0 ? totalCR / countCR : 0;
-        lines.push('### Compresi\u00f3n');
-        lines.push('- Ratio de compresi\u00f3n medio: ' + meanCR.toFixed(4) +
-            ' (BoostAODE usa en media el ' + (meanCR * 100).toFixed(1) + '% de los SPODEs de AODE)');
+        lines.push(i18n.t('ai.ctx.compressionTitle'));
+        lines.push(i18n.t('ai.ctx.compressionLine', meanCR.toFixed(4), (meanCR * 100).toFixed(1)));
     }
 
     return lines.join('\n');
@@ -198,7 +183,7 @@ function buildBasicContext() {
    -------------------------------------------------------------------------- */
 
 function buildDetailedContext() {
-    if (!AppData.loaded) return '(Datos no cargados)';
+    if (!AppData.loaded) return i18n.t('ai.ctx.notLoaded');
 
     var lines = [];
 
@@ -207,15 +192,15 @@ function buildDetailedContext() {
     lines.push('');
 
     // CLC definition
-    lines.push('### Definici\u00f3n de CLC_\u03b1');
-    lines.push('CLC_\u03b1 = \u03b1 \u00d7 accuracy + (1 - \u03b1) \u00d7 (1 - n_spodes / n_features)');
-    lines.push('- AODE siempre usa n_spodes = n_features (simplicidad = 0)');
-    lines.push('- BoostAODE selecciona k \u2264 n_features SPODEs (simplicidad = 1 - k/n_features)');
-    lines.push('- \u03b1 breakeven: valor de \u03b1 donde CLC_\u03b1(AODE) = CLC_\u03b1(BoostAODE)');
+    lines.push(i18n.t('ai.ctx.clcDefTitle'));
+    lines.push(i18n.t('ai.ctx.clcFormula'));
+    lines.push(i18n.t('ai.ctx.clcNote1'));
+    lines.push(i18n.t('ai.ctx.clcNote2'));
+    lines.push(i18n.t('ai.ctx.clcNote3'));
     lines.push('');
 
     // Complete paired comparison table
-    lines.push('### Comparaci\u00f3n por Dataset');
+    lines.push(i18n.t('ai.ctx.pairedTitle'));
     var paired = AppData.paired;
     if (paired && paired.datasets) {
         if (promptState.format === 'json') {
@@ -229,7 +214,7 @@ function buildDetailedContext() {
     lines.push('');
 
     // Statistical tests
-    lines.push('### Tests Estad\u00edsticos (Wilcoxon Signed-Rank)');
+    lines.push(i18n.t('ai.ctx.testsTitle'));
     var tests = AppData.tests;
     if (tests && tests.tests) {
         if (promptState.format === 'json') {
@@ -244,7 +229,7 @@ function buildDetailedContext() {
             tests.tests.forEach(function(t) {
                 lines.push('- ' + t.metric + ': W=' + t.wilcoxon_stat +
                     ', p=' + formatPVal(t.p_value) +
-                    ', significativo=' + (t.significant ? 'S\u00ed' : 'No') +
+                    ', ' + i18n.t('ai.ctx.significant') + (t.significant ? i18n.t('ai.ctx.yes') : i18n.t('ai.ctx.no')) +
                     ', W/T/L=' + t.wins + '/' + t.ties + '/' + t.losses);
             });
         }
@@ -252,7 +237,7 @@ function buildDetailedContext() {
     lines.push('');
 
     // Segmented analysis
-    lines.push('### An\u00e1lisis Segmentado Completo');
+    lines.push(i18n.t('ai.ctx.segFullTitle'));
     var segmented = AppData.segmented;
     if (segmented && segmented.segments) {
         if (promptState.format === 'json') {
@@ -287,7 +272,7 @@ function buildDetailedContext() {
    -------------------------------------------------------------------------- */
 
 function buildCompleteContext() {
-    if (!AppData.loaded) return '(Datos no cargados)';
+    if (!AppData.loaded) return i18n.t('ai.ctx.notLoaded');
 
     var lines = [];
 
@@ -296,8 +281,7 @@ function buildCompleteContext() {
     lines.push('');
 
     // All experimental results
-    lines.push('### Resultados Experimentales Crudos (' +
-        AppData.experimental.results.length + ' observaciones)');
+    lines.push(i18n.t('ai.ctx.rawTitle', AppData.experimental.results.length));
 
     var results = AppData.experimental.results;
     if (promptState.format === 'json') {
@@ -324,9 +308,9 @@ function buildCompleteContext() {
         });
     } else {
         // Text table header
-        lines.push(padRight('Dataset', 28) + padRight('Clasif.', 12) + padRight('Fold', 5) +
-            padRight('Rep', 5) + padRight('Accuracy', 10) + padRight('SPODEs', 8) +
-            padRight('T.Train', 10) + padRight('T.Pred', 10));
+        lines.push(padRight(i18n.t('ai.ctx.colDataset'), 28) + padRight(i18n.t('ai.ctx.colClassifier'), 12) + padRight(i18n.t('ai.ctx.colFold'), 5) +
+            padRight(i18n.t('ai.ctx.colRep'), 5) + padRight(i18n.t('ai.ctx.colAccuracy'), 10) + padRight(i18n.t('ai.ctx.colSpodes'), 8) +
+            padRight(i18n.t('ai.ctx.colTrainTime'), 10) + padRight(i18n.t('ai.ctx.colPredictTime'), 10));
         lines.push('-'.repeat(98));
         results.forEach(function(r) {
             lines.push(
@@ -583,11 +567,11 @@ function padRight(str, len) {
 
 function segmentLabel(seg) {
     var labels = {
-        'all': 'Todos',
-        'high_dim': 'Alta dimensionalidad',
-        'low_dim': 'Baja dimensionalidad',
-        'small': 'Datasets peque\u00f1os',
-        'large': 'Datasets grandes'
+        'all': i18n.t('ai.seg.all'),
+        'high_dim': i18n.t('ai.seg.highDim'),
+        'low_dim': i18n.t('ai.seg.lowDim'),
+        'small': i18n.t('ai.seg.small'),
+        'large': i18n.t('ai.seg.large')
     };
     return labels[seg] || seg;
 }
@@ -604,10 +588,14 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (!ok) {
         var output = document.getElementById('prompt-output');
         if (output) {
-            output.value = 'Error: No se pudieron cargar los datos experimentales.';
+            output.value = i18n.t('ai.errorLoading');
         }
         return;
     }
 
     init();
+
+    document.addEventListener('langchange', function() {
+        generatePrompt();
+    });
 });
