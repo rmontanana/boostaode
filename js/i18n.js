@@ -40,6 +40,18 @@ const i18n = (() => {
 
             // === FOOTER ===
             'footer.text': 'BoostAODE vs AODE \u2014 Paired comparison experiment \u2014 40 datasets, 5-fold \u00d7 5 repetitions',
+            'footer.credits': 'Credits',
+            'footer.creditsTitle': 'View project credits',
+
+            // === CREDITS ===
+            'credits.title': 'About & Credits',
+            'credits.author': 'Author',
+            'credits.role': 'Researcher & Developer',
+            'credits.techStack': 'Tech Stack',
+            'credits.libraries': 'Libraries',
+            'credits.contributors': 'Contributors',
+            'credits.contributorDesc': 'AI Assistant',
+            'credits.design': 'Design',
 
             // === RESULTS PAGE (index.html) ===
             'results.title': 'Results - BoostAODE vs AODE',
@@ -382,6 +394,18 @@ const i18n = (() => {
 
             // === FOOTER ===
             'footer.text': 'BoostAODE vs AODE \u2014 Experimento de comparaci\u00f3n pareada \u2014 40 datasets, 5-fold \u00d7 5 repeticiones',
+            'footer.credits': 'Cr\u00e9ditos',
+            'footer.creditsTitle': 'Ver cr\u00e9ditos del proyecto',
+
+            // === CREDITS ===
+            'credits.title': 'Acerca de & Cr\u00e9ditos',
+            'credits.author': 'Autor',
+            'credits.role': 'Investigador & Desarrollador',
+            'credits.techStack': 'Stack Tecnol\u00f3gico',
+            'credits.libraries': 'Bibliotecas',
+            'credits.contributors': 'Colaboradores',
+            'credits.contributorDesc': 'Asistente IA',
+            'credits.design': 'Dise\u00f1o',
 
             // === RESULTS PAGE ===
             'results.title': 'Resultados - BoostAODE vs AODE',
