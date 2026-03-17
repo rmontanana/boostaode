@@ -80,13 +80,34 @@ function computeQuartiles(arr) {
         if (hi >= n) return sorted[n - 1];
         return sorted[lo] * (1 - f) + sorted[hi] * f;
     }
+    var q1 = interp(q1Idx);
+    var q3 = interp(q3Idx);
+    var iqr = q3 - q1;
+    var lowerFence = q1 - 1.5 * iqr;
+    var upperFence = q3 + 1.5 * iqr;
+    // Whisker endpoints: most extreme values within fences
+    var whiskerMin = sorted[0];
+    var whiskerMax = sorted[n - 1];
+    var outliers = [];
+    for (var i = 0; i < n; i++) {
+        if (sorted[i] >= lowerFence) { whiskerMin = sorted[i]; break; }
+        outliers.push(sorted[i]);
+    }
+    for (var i = n - 1; i >= 0; i--) {
+        if (sorted[i] <= upperFence) { whiskerMax = sorted[i]; break; }
+        outliers.push(sorted[i]);
+    }
     return {
         min: sorted[0],
-        q1: interp(q1Idx),
+        q1: q1,
         median: interp(medIdx),
-        q3: interp(q3Idx),
+        q3: q3,
         max: sorted[n - 1],
-        mean: arr.reduce(function(s, v) { return s + v; }, 0) / n
+        mean: arr.reduce(function(s, v) { return s + v; }, 0) / n,
+        iqr: iqr,
+        whiskerMin: whiskerMin,
+        whiskerMax: whiskerMax,
+        outliers: outliers
     };
 }
 
@@ -498,17 +519,8 @@ function renderCLCBoxplots() {
     var statsAode = computeQuartiles(aodeVals);
     var statsBoost = computeQuartiles(boostVals);
 
-    // Build combined chart: floating bars for IQR + scatter for individual points
+    // Floating bars for IQR + whiskers/outliers plugin
     // X positions: 0 = AODE, 1 = BoostAODE
-    // Floating bar: [Q1, Q3]
-    // Lines plugin: whiskers + median
-
-    // Jitter individual points
-    function jitter(arr, xCenter) {
-        return arr.map(function(v) {
-            return { x: xCenter + (Math.random() - 0.5) * 0.3, y: v };
-        });
-    }
 
     chartState.chartInstance = new Chart(ctx, {
         type: 'bar',
@@ -526,28 +538,6 @@ function renderCLCBoxplots() {
                     borderWidth: 2,
                     barPercentage: 0.5,
                     categoryPercentage: 0.8
-                },
-                {
-                    label: i18n.t('charts.legend.datasetsAODE'),
-                    type: 'scatter',
-                    data: jitter(aodeVals, 0),
-                    backgroundColor: hexToRgba(colors.aode, 0.6),
-                    borderColor: colors.aode,
-                    borderWidth: 1,
-                    pointRadius: 4,
-                    pointHoverRadius: 7,
-                    xAxisID: 'x'
-                },
-                {
-                    label: i18n.t('charts.legend.datasetsBoost'),
-                    type: 'scatter',
-                    data: jitter(boostVals, 1),
-                    backgroundColor: hexToRgba(colors.boostaode, 0.6),
-                    borderColor: colors.boostaode,
-                    borderWidth: 1,
-                    pointRadius: 4,
-                    pointHoverRadius: 7,
-                    xAxisID: 'x'
                 }
             ]
         },
@@ -568,19 +558,19 @@ function renderCLCBoxplots() {
                     padding: 10,
                     callbacks: {
                         label: function(ctx) {
-                            if (ctx.datasetIndex === 0) {
-                                var idx = ctx.dataIndex;
-                                var s = idx === 0 ? statsAode : statsBoost;
-                                return [
-                                    'Min: ' + s.min.toFixed(4),
-                                    'Q1: ' + s.q1.toFixed(4),
-                                    'Mediana: ' + s.median.toFixed(4),
-                                    'Media: ' + s.mean.toFixed(4),
-                                    'Q3: ' + s.q3.toFixed(4),
-                                    'Max: ' + s.max.toFixed(4)
-                                ];
+                            var idx = ctx.dataIndex;
+                            var s = idx === 0 ? statsAode : statsBoost;
+                            var lines = [];
+                            if (s.outliers && s.outliers.length > 0) {
+                                lines.push('Outliers: ' + s.outliers.map(function(v) { return v.toFixed(4); }).join(', '));
                             }
-                            return 'CLC_' + alpha + ': ' + ctx.raw.y.toFixed(4);
+                            lines.push('Whisker inf: ' + s.whiskerMin.toFixed(4));
+                            lines.push('Q1: ' + s.q1.toFixed(4));
+                            lines.push('Mediana: ' + s.median.toFixed(4));
+                            lines.push('Media: ' + s.mean.toFixed(4));
+                            lines.push('Q3: ' + s.q3.toFixed(4));
+                            lines.push('Whisker sup: ' + s.whiskerMax.toFixed(4));
+                            return lines;
                         }
                     }
                 }
@@ -592,11 +582,21 @@ function renderCLCBoxplots() {
                     ticks: { color: colors.textSec, font: { size: 13, weight: '600' } },
                     grid: { display: false }
                 },
-                y: {
-                    title: { display: true, text: i18n.t('charts.axis.clcAlpha') + ' (\u03b1=' + alpha + ')', color: colors.textSec, font: { size: 13 } },
-                    ticks: { color: colors.textMuted, font: { size: 11 } },
-                    grid: { color: colors.gridDark }
-                }
+                y: (function() {
+                    // Compute Y range from all data including outliers and whiskers
+                    var allVals = [statsAode.whiskerMin, statsAode.whiskerMax, statsBoost.whiskerMin, statsBoost.whiskerMax]
+                        .concat(statsAode.outliers || []).concat(statsBoost.outliers || []);
+                    var dataMin = Math.min.apply(null, allVals);
+                    var dataMax = Math.max.apply(null, allVals);
+                    var padding = (dataMax - dataMin) * 0.08;
+                    return {
+                        title: { display: true, text: i18n.t('charts.axis.clcAlpha') + ' (\u03b1=' + alpha + ')', color: colors.textSec, font: { size: 13 } },
+                        suggestedMin: Math.floor((dataMin - padding) * 100) / 100,
+                        suggestedMax: Math.ceil((dataMax + padding) * 100) / 100,
+                        ticks: { color: colors.textMuted, font: { size: 11 } },
+                        grid: { color: colors.gridDark }
+                    };
+                })()
             }
         },
         plugins: [{
@@ -620,31 +620,43 @@ function renderCLCBoxplots() {
                     ctx2.strokeStyle = colorsArr[i];
                     ctx2.lineWidth = 2;
 
-                    // Whisker: min to Q1
-                    var yMin = yScale.getPixelForValue(s.min);
+                    // Whisker: whiskerMin to Q1 (Tukey 1.5×IQR rule)
+                    var yWMin = yScale.getPixelForValue(s.whiskerMin);
                     var yQ1 = yScale.getPixelForValue(s.q1);
                     ctx2.beginPath();
                     ctx2.moveTo(cx, yQ1);
-                    ctx2.lineTo(cx, yMin);
+                    ctx2.lineTo(cx, yWMin);
                     ctx2.stroke();
-                    // Min cap
+                    // Lower cap
                     ctx2.beginPath();
-                    ctx2.moveTo(cx - halfW, yMin);
-                    ctx2.lineTo(cx + halfW, yMin);
+                    ctx2.moveTo(cx - halfW, yWMin);
+                    ctx2.lineTo(cx + halfW, yWMin);
                     ctx2.stroke();
 
-                    // Whisker: Q3 to max
+                    // Whisker: Q3 to whiskerMax (Tukey 1.5×IQR rule)
                     var yQ3 = yScale.getPixelForValue(s.q3);
-                    var yMax = yScale.getPixelForValue(s.max);
+                    var yWMax = yScale.getPixelForValue(s.whiskerMax);
                     ctx2.beginPath();
                     ctx2.moveTo(cx, yQ3);
-                    ctx2.lineTo(cx, yMax);
+                    ctx2.lineTo(cx, yWMax);
                     ctx2.stroke();
-                    // Max cap
+                    // Upper cap
                     ctx2.beginPath();
-                    ctx2.moveTo(cx - halfW, yMax);
-                    ctx2.lineTo(cx + halfW, yMax);
+                    ctx2.moveTo(cx - halfW, yWMax);
+                    ctx2.lineTo(cx + halfW, yWMax);
                     ctx2.stroke();
+
+                    // Outliers: hollow circles beyond fences
+                    if (s.outliers && s.outliers.length > 0) {
+                        ctx2.lineWidth = 1.5;
+                        s.outliers.forEach(function(val) {
+                            var yOut = yScale.getPixelForValue(val);
+                            ctx2.beginPath();
+                            ctx2.arc(cx, yOut, 5, 0, 2 * Math.PI);
+                            ctx2.stroke();
+                        });
+                        ctx2.lineWidth = 2;
+                    }
 
                     // Median line
                     var yMed = yScale.getPixelForValue(s.median);

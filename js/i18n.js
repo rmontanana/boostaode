@@ -157,7 +157,7 @@ const i18n = (() => {
             // Chart descriptions
             'charts.desc.scatterAccuracy': 'Scatter plot comparing the mean accuracy of BoostAODE (Y axis) vs AODE (X axis) for each dataset. Points above the y=x diagonal indicate that BoostAODE outperforms AODE.',
             'charts.desc.scatterPareto': 'Pareto front: model simplicity (X axis) vs accuracy (Y axis). AODE always has simplicity 0 (uses all SPODEs). BoostAODE can achieve higher simplicity by selecting fewer SPODEs.',
-            'charts.desc.clcBoxplots': 'Distribution of CLC_\u03b1 values for each classifier across the 40 datasets. Shows quartiles (Q1, median, Q3) and individual dataset points.',
+            'charts.desc.clcBoxplots': 'Distribution of CLC_\u03b1 values for each classifier across the 40 datasets. Shows quartiles (Q1, median, Q3), whiskers (Tukey 1.5\u00d7IQR rule) and outliers.',
             'charts.desc.alphaBreakeven': 'Distribution of \u03b1 breakeven values across datasets. The \u03b1 breakeven is the value of \u03b1 at which CLC_\u03b1(AODE) equals CLC_\u03b1(BoostAODE). Datasets with no breakeven always favor BoostAODE.',
             'charts.desc.compressionHist': 'Distribution of the compression ratio (n_spodes/n_features) across datasets. Lower values indicate that BoostAODE uses fewer SPODEs relative to the total number of features.',
             'charts.desc.compressionFeatures': 'Relationship between the number of features and the compression ratio achieved by BoostAODE. Bubble size is proportional to the number of samples.',
@@ -500,7 +500,7 @@ const i18n = (() => {
 
             'charts.desc.scatterAccuracy': 'Diagrama de dispersi\u00f3n que compara la accuracy media de BoostAODE (eje Y) frente a AODE (eje X) para cada dataset. Los puntos por encima de la diagonal y=x indican que BoostAODE supera a AODE.',
             'charts.desc.scatterPareto': 'Frente de Pareto: simplicidad del modelo (eje X) frente a accuracy (eje Y). AODE siempre tiene simplicidad 0 (usa todos los SPODEs). BoostAODE puede alcanzar mayor simplicidad al seleccionar menos SPODEs.',
-            'charts.desc.clcBoxplots': 'Distribuci\u00f3n de los valores CLC_\u03b1 para cada clasificador a trav\u00e9s de los 40 datasets. Se muestran los cuartiles (Q1, mediana, Q3) y los puntos individuales de cada dataset.',
+            'charts.desc.clcBoxplots': 'Distribuci\u00f3n de los valores CLC_\u03b1 para cada clasificador a trav\u00e9s de los 40 datasets. Se muestran los cuartiles (Q1, mediana, Q3), bigotes (regla de Tukey 1,5\u00d7IQR) y outliers.',
             'charts.desc.alphaBreakeven': 'Distribuci\u00f3n de los valores \u03b1 breakeven entre datasets. El \u03b1 breakeven es el valor de \u03b1 en el que CLC_\u03b1(AODE) iguala a CLC_\u03b1(BoostAODE). Los datasets sin breakeven favorecen siempre a BoostAODE.',
             'charts.desc.compressionHist': 'Distribuci\u00f3n del ratio de compresi\u00f3n (n_spodes/n_features) entre datasets. Valores m\u00e1s bajos indican que BoostAODE utiliza menos SPODEs en relaci\u00f3n al n\u00famero total de features.',
             'charts.desc.compressionFeatures': 'Relaci\u00f3n entre el n\u00famero de features y el ratio de compresi\u00f3n conseguido por BoostAODE. El tama\u00f1o del punto es proporcional al n\u00famero de muestras.',
