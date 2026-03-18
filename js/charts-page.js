@@ -931,7 +931,7 @@ function renderCompressionFeatures() {
                             return [
                                 p.dataset,
                                 'Features: ' + p.x,
-                                'Compresi\u00f3n: ' + p.y.toFixed(3),
+                                'Uso SPODEs: ' + p.y.toFixed(3),
                                 'SPODEs: ' + p.n_spodes + ' / ' + p.x,
                                 'Muestras: ' + p.n_samples.toLocaleString()
                             ];
