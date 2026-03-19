@@ -798,19 +798,24 @@ function renderCompressionHist() {
     var datasets = AppData.paired.datasets;
     var ctx = document.getElementById('chart-canvas').getContext('2d');
 
-    // Bins: [0,0.1), [0.1,0.2), ..., [0.9,1.0]
-    var binLabels = ['0-0.1', '0.1-0.2', '0.2-0.3', '0.3-0.4', '0.4-0.5', '0.5-0.6', '0.6-0.7', '0.7-0.8', '0.8-0.9', '0.9-1.0'];
-    var binCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    // Bins: [0,0.05), [0.05,0.1), ..., [0.95,1.0] — 20 bins to match thesis histogram
+    var nBins = 20;
+    var binLabels = [];
+    var binCounts = [];
+    for (var i = 0; i < nBins; i++) {
+        binLabels.push((i * 0.05).toFixed(2) + '-' + ((i + 1) * 0.05).toFixed(2));
+        binCounts.push(0);
+    }
 
     datasets.forEach(function(d) {
         var cr = d.compression_ratio;
-        var bin = Math.min(Math.floor(cr * 10), 9);
+        var bin = Math.min(Math.floor(cr * nBins), nBins - 1);
         binCounts[bin]++;
     });
 
     // Color gradient: violet (high compression, low ratio) to gray (low compression, high ratio)
     var barColors = binCounts.map(function(_, i) {
-        var t = i / 9; // 0=high compression, 1=no compression
+        var t = i / (nBins - 1); // 0=high compression, 1=no compression
         if (t < 0.5) return hexToRgba(colors.boostaode, 0.8 - t * 0.4);
         return hexToRgba(colors.neutral, 0.3 + (t - 0.5) * 0.6);
     });
@@ -851,7 +856,10 @@ function renderCompressionHist() {
             scales: {
                 x: {
                     title: { display: true, text: i18n.t('charts.axis.compressionRatio'), color: colors.textSec, font: { size: 13 } },
-                    ticks: { color: colors.textMuted, font: { size: 11 } },
+                    ticks: {
+                        color: colors.textMuted, font: { size: 10 }, maxRotation: 45, minRotation: 45,
+                        callback: function(val, idx) { return idx % 2 === 0 ? this.getLabelForValue(val) : ''; }
+                    },
                     grid: { display: false }
                 },
                 y: {
