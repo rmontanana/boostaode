@@ -1,490 +1,654 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-theme="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title data-i18n="ai.title">AI Query - BoostAODE vs AODE</title>
-    <link rel="stylesheet" href="css/theme.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/ai-prompt.css">
-</head>
-<body>
-
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/ai-prompt.css" />
+  </head>
+  <body>
     <!-- ====================================================================
          Navbar
          ==================================================================== -->
     <nav class="navbar">
-        <div class="navbar-inner">
-            <a href="index.html" class="navbar-logo">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 20V10"></path>
-                    <path d="M18 20V4"></path>
-                    <path d="M6 20v-4"></path>
-                </svg>
-                <span>BoostAODE</span>
-            </a>
+      <div class="navbar-inner">
+        <a href="index.html" class="navbar-logo">
+          <svg
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 20V10"></path>
+            <path d="M18 20V4"></path>
+            <path d="M6 20v-4"></path>
+          </svg>
+          <span>BoostAODE</span>
+        </a>
 
-            <div class="navbar-nav">
-                <a href="index.html" class="nav-link">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="3" width="7" height="7"></rect>
-                        <rect x="14" y="3" width="7" height="7"></rect>
-                        <rect x="3" y="14" width="7" height="7"></rect>
-                        <rect x="14" y="14" width="7" height="7"></rect>
-                    </svg>
-                    <span data-i18n="nav.results">Results</span>
-                </a>
-                <a href="charts.html" class="nav-link">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="20" x2="18" y2="10"></line>
-                        <line x1="12" y1="20" x2="12" y2="4"></line>
-                        <line x1="6" y1="20" x2="6" y2="14"></line>
-                    </svg>
-                    <span data-i18n="nav.charts">Charts</span>
-                </a>
-                <a href="ai-prompt.html" class="nav-link active">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                    </svg>
-                    <span data-i18n="nav.ai">AI Query</span>
-                </a>
-            </div>
-
-            <div class="navbar-actions">
-                <button class="theme-toggle" onclick="toggleTheme()" data-i18n-title="nav.themeTitle" aria-label="Toggle theme">
-                    <svg id="icon-sun" class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                    <svg id="icon-moon" class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                </button>
-                <div class="lang-toggle">
-                    <button class="btn-lang-opt" data-lang="es">ES</button>
-                    <span class="lang-divider"></span>
-                    <button class="btn-lang-opt" data-lang="en">EN</button>
-                </div>
-            </div>
+        <div class="navbar-nav">
+          <a href="index.html" class="nav-link">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+            </svg>
+            <span data-i18n="nav.results">Results</span>
+          </a>
+          <a href="charts.html" class="nav-link">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+            <span data-i18n="nav.charts">Charts</span>
+          </a>
+          <a href="ai-prompt.html" class="nav-link active">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <span data-i18n="nav.ai">AI Query</span>
+          </a>
         </div>
+
+        <div class="navbar-actions">
+          <button
+            class="theme-toggle"
+            onclick="toggleTheme()"
+            data-i18n-title="nav.themeTitle"
+            aria-label="Toggle theme"
+          >
+            <svg
+              id="icon-sun"
+              class="icon-sun"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg
+              id="icon-moon"
+              class="icon-moon"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+          <div class="lang-toggle">
+            <button class="btn-lang-opt" data-lang="es">ES</button>
+            <span class="lang-divider"></span>
+            <button class="btn-lang-opt" data-lang="en">EN</button>
+          </div>
+        </div>
+      </div>
     </nav>
 
     <!-- ====================================================================
          Main Content
          ==================================================================== -->
     <main class="container" id="main-content">
+      <!-- Page Header -->
+      <div class="page-header">
+        <h1 data-i18n="ai.header">AI Query</h1>
+        <p data-i18n="ai.subtitle">
+          Generate a prompt with experimental data to query an external AI
+        </p>
+      </div>
 
-        <!-- Page Header -->
-        <div class="page-header">
-            <h1 data-i18n="ai.header">AI Query</h1>
-            <p data-i18n="ai.subtitle">Generate a prompt with experimental data to query an external AI</p>
-        </div>
-
-        <!-- Two-column Layout -->
-        <div class="prompt-layout">
-
-            <!-- ============================================================
+      <!-- Two-column Layout -->
+      <div class="prompt-layout">
+        <!-- ============================================================
                  Left: Config Panel
                  ============================================================ -->
-            <aside class="config-panel">
-
-                <!-- Section: Detail Level -->
-                <div class="config-section">
-                    <h3 data-i18n="ai.detailLevel">Detail Level</h3>
-                    <div class="detail-level">
-                        <!-- Basic -->
-                        <label class="detail-level-option">
-                            <input type="radio" name="detail-level" value="basic" checked>
-                            <div class="detail-level-card">
-                                <div class="detail-level-icon">
-                                    <!-- Simple chart icon -->
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="18" y1="20" x2="18" y2="10"></line>
-                                        <line x1="12" y1="20" x2="12" y2="4"></line>
-                                        <line x1="6" y1="20" x2="6" y2="14"></line>
-                                    </svg>
-                                </div>
-                                <div class="detail-level-info">
-                                    <span class="detail-level-name" data-i18n="ai.basic">Basic</span>
-                                    <span class="detail-level-desc" data-i18n="ai.basicDesc">Main statistical summary (~2K tokens)</span>
-                                </div>
-                            </div>
-                        </label>
-
-                        <!-- Detailed -->
-                        <label class="detail-level-option">
-                            <input type="radio" name="detail-level" value="detailed">
-                            <div class="detail-level-card">
-                                <div class="detail-level-icon">
-                                    <!-- Table icon -->
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                        <line x1="3" y1="9" x2="21" y2="9"></line>
-                                        <line x1="3" y1="15" x2="21" y2="15"></line>
-                                        <line x1="9" y1="3" x2="9" y2="21"></line>
-                                    </svg>
-                                </div>
-                                <div class="detail-level-info">
-                                    <span class="detail-level-name" data-i18n="ai.detailed">Detailed</span>
-                                    <span class="detail-level-desc" data-i18n="ai.detailedDesc">Per-dataset data + statistical tests (~8K tokens)</span>
-                                </div>
-                            </div>
-                        </label>
-
-                        <!-- Complete -->
-                        <label class="detail-level-option">
-                            <input type="radio" name="detail-level" value="complete">
-                            <div class="detail-level-card">
-                                <div class="detail-level-icon">
-                                    <!-- Database icon -->
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-                                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
-                                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
-                                    </svg>
-                                </div>
-                                <div class="detail-level-info">
-                                    <span class="detail-level-name" data-i18n="ai.complete">Complete</span>
-                                    <span class="detail-level-desc" data-i18n="ai.completeDesc">All experimental results (~50K tokens)</span>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
+        <aside class="config-panel">
+          <!-- Section: Detail Level -->
+          <div class="config-section">
+            <h3 data-i18n="ai.detailLevel">Detail Level</h3>
+            <div class="detail-level">
+              <!-- Basic -->
+              <label class="detail-level-option">
+                <input type="radio" name="detail-level" value="basic" checked />
+                <div class="detail-level-card">
+                  <div class="detail-level-icon">
+                    <!-- Simple chart icon -->
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <line x1="18" y1="20" x2="18" y2="10"></line>
+                      <line x1="12" y1="20" x2="12" y2="4"></line>
+                      <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>
+                  </div>
+                  <div class="detail-level-info">
+                    <span class="detail-level-name" data-i18n="ai.basic">
+                      Basic
+                    </span>
+                    <span class="detail-level-desc" data-i18n="ai.basicDesc">
+                      Main statistical summary (~2K tokens)
+                    </span>
+                  </div>
                 </div>
+              </label>
 
-                <!-- Section: Data Format -->
-                <div class="config-section">
-                    <h3 data-i18n="ai.dataFormat">Data Format</h3>
-                    <div class="format-options">
-                        <div class="radio-group">
-                            <input type="radio" name="data-format" id="fmt-text" value="text" checked>
-                            <label for="fmt-text" data-i18n="ai.fmtText">Plain text</label>
-                            <input type="radio" name="data-format" id="fmt-json" value="json">
-                            <label for="fmt-json" data-i18n="ai.fmtJSON">JSON</label>
-                            <input type="radio" name="data-format" id="fmt-csv" value="csv">
-                            <label for="fmt-csv" data-i18n="ai.fmtCSV">CSV</label>
-                        </div>
-                    </div>
+              <!-- Detailed -->
+              <label class="detail-level-option">
+                <input type="radio" name="detail-level" value="detailed" />
+                <div class="detail-level-card">
+                  <div class="detail-level-icon">
+                    <!-- Table icon -->
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <rect
+                        x="3"
+                        y="3"
+                        width="18"
+                        height="18"
+                        rx="2"
+                        ry="2"
+                      ></rect>
+                      <line x1="3" y1="9" x2="21" y2="9"></line>
+                      <line x1="3" y1="15" x2="21" y2="15"></line>
+                      <line x1="9" y1="3" x2="9" y2="21"></line>
+                    </svg>
+                  </div>
+                  <div class="detail-level-info">
+                    <span class="detail-level-name" data-i18n="ai.detailed">
+                      Detailed
+                    </span>
+                    <span class="detail-level-desc" data-i18n="ai.detailedDesc">
+                      Per-dataset data + statistical tests (~8K tokens)
+                    </span>
+                  </div>
                 </div>
+              </label>
 
-                <!-- Section: Information -->
-                <div class="config-section">
-                    <h3 data-i18n="ai.information">Information</h3>
-                    <div class="context-stats">
-                        <div class="context-stat-row">
-                            <span data-i18n="common.datasets">Datasets</span>
-                            <span class="context-stat-value">40</span>
-                        </div>
-                        <div class="context-stat-row">
-                            <span data-i18n="common.results">Results</span>
-                            <span class="context-stat-value">2000</span>
-                        </div>
-                        <div class="context-stat-row">
-                            <span data-i18n="common.classifiers">Classifiers</span>
-                            <span class="context-stat-value">2</span>
-                        </div>
-                        <div class="context-stat-row">
-                            <span data-i18n="ai.tokensEstimated">Estimated tokens</span>
-                            <span class="context-stat-value" id="sidebar-token-estimate">~2K</span>
-                        </div>
-                    </div>
+              <!-- Complete -->
+              <label class="detail-level-option">
+                <input type="radio" name="detail-level" value="complete" />
+                <div class="detail-level-card">
+                  <div class="detail-level-icon">
+                    <!-- Database icon -->
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                      <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                      <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                    </svg>
+                  </div>
+                  <div class="detail-level-info">
+                    <span class="detail-level-name" data-i18n="ai.complete">
+                      Complete
+                    </span>
+                    <span class="detail-level-desc" data-i18n="ai.completeDesc">
+                      All experimental results (~50K tokens)
+                    </span>
+                  </div>
                 </div>
+              </label>
+            </div>
+          </div>
 
-            </aside>
+          <!-- Section: Data Format -->
+          <div class="config-section">
+            <h3 data-i18n="ai.dataFormat">Data Format</h3>
+            <div class="format-options">
+              <div class="radio-group">
+                <input
+                  type="radio"
+                  name="data-format"
+                  id="fmt-text"
+                  value="text"
+                  checked
+                />
+                <label for="fmt-text" data-i18n="ai.fmtText">Plain text</label>
+                <input
+                  type="radio"
+                  name="data-format"
+                  id="fmt-json"
+                  value="json"
+                />
+                <label for="fmt-json" data-i18n="ai.fmtJSON">JSON</label>
+                <input
+                  type="radio"
+                  name="data-format"
+                  id="fmt-csv"
+                  value="csv"
+                />
+                <label for="fmt-csv" data-i18n="ai.fmtCSV">CSV</label>
+              </div>
+            </div>
+          </div>
 
-            <!-- ============================================================
+          <!-- Section: Information -->
+          <div class="config-section">
+            <h3 data-i18n="ai.information">Information</h3>
+            <div class="context-stats">
+              <div class="context-stat-row">
+                <span data-i18n="common.datasets">Datasets</span>
+                <span class="context-stat-value">40</span>
+              </div>
+              <div class="context-stat-row">
+                <span data-i18n="common.results">Results</span>
+                <span class="context-stat-value">2000</span>
+              </div>
+              <div class="context-stat-row">
+                <span data-i18n="common.classifiers">Classifiers</span>
+                <span class="context-stat-value">2</span>
+              </div>
+              <div class="context-stat-row">
+                <span data-i18n="ai.tokensEstimated">Estimated tokens</span>
+                <span class="context-stat-value" id="sidebar-token-estimate">
+                  ~2K
+                </span>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- ============================================================
                  Right: Prompt Panel
                  ============================================================ -->
-            <div class="prompt-panel">
+        <div class="prompt-panel">
+          <!-- Question Input -->
+          <div class="prompt-question-section">
+            <label for="prompt-question" data-i18n="ai.yourQuestion">
+              Your question
+            </label>
+            <textarea
+              id="prompt-question"
+              rows="3"
+              data-i18n-placeholder="ai.questionPlaceholder"
+              placeholder="Write your question about the experimental results..."
+            ></textarea>
+          </div>
 
-                <!-- Question Input -->
-                <div class="prompt-question-section">
-                    <label for="prompt-question" data-i18n="ai.yourQuestion">Your question</label>
-                    <textarea id="prompt-question" rows="3" data-i18n-placeholder="ai.questionPlaceholder" placeholder="Write your question about the experimental results..."></textarea>
-                </div>
-
-                <!-- Example Questions -->
-                <div class="example-questions">
-                    <div class="example-questions-label" data-i18n="ai.exampleQuestions">Example questions</div>
-
-                    <button class="example-chip" data-question-key="ai.ex1question">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                        <span data-i18n="ai.ex1label">Datasets where BoostAODE wins in accuracy</span>
-                    </button>
-
-                    <button class="example-chip" data-question-key="ai.ex2question">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-                        <span data-i18n="ai.ex2label">&alpha; breakeven value and its meaning</span>
-                    </button>
-
-                    <button class="example-chip" data-question-key="ai.ex3question">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                        <span data-i18n="ai.ex3label">Dimensionality vs BoostAODE advantage</span>
-                    </button>
-
-                    <button class="example-chip" data-question-key="ai.ex4question">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                        <span data-i18n="ai.ex4label">Scenarios where AODE is sufficient</span>
-                    </button>
-
-                    <button class="example-chip" data-question-key="ai.ex5question">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                        <span data-i18n="ai.ex5label">RQ1-RQ5 summary</span>
-                    </button>
-
-                    <button class="example-chip" data-question-key="ai.ex6question">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                        <span data-i18n="ai.ex6label">Dataset size vs compression</span>
-                    </button>
-                </div>
-
-                <!-- Generated Prompt Output -->
-                <div class="prompt-output-section">
-                    <div class="prompt-output-header">
-                        <div class="prompt-output-title">
-                            <!-- Sparkles icon -->
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 3l1.912 5.813a2 2 0 0 0 1.275 1.275L21 12l-5.813 1.912a2 2 0 0 0-1.275 1.275L12 21l-1.912-5.813a2 2 0 0 0-1.275-1.275L3 12l5.813-1.912a2 2 0 0 0 1.275-1.275L12 3z"></path>
-                            </svg>
-                            <span data-i18n="ai.generatedPrompt">Generated Prompt</span>
-                        </div>
-                        <div class="prompt-output-actions">
-                            <span class="token-badge" id="token-badge">~2K tokens</span>
-                            <button class="btn btn-secondary btn-sm" id="copy-prompt-btn">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                </svg>
-                                <span data-i18n="common.copy">Copy</span>
-                            </button>
-                        </div>
-                    </div>
-                    <textarea class="prompt-output" id="prompt-output" readonly data-i18n-placeholder="ai.promptPlaceholder" placeholder="The prompt will be generated automatically..."></textarea>
-                </div>
-
-                <!-- AI External Links -->
-                <div class="ai-links-section">
-                    <div class="ai-links-label" data-i18n="ai.openExternal">Open in external AI</div>
-                    <div class="ai-links">
-                        <a href="https://claude.ai/new" target="_blank" rel="noopener noreferrer" class="ai-link ai-link--claude">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 3l1.912 5.813a2 2 0 0 0 1.275 1.275L21 12l-5.813 1.912a2 2 0 0 0-1.275 1.275L12 21l-1.912-5.813a2 2 0 0 0-1.275-1.275L3 12l5.813-1.912a2 2 0 0 0 1.275-1.275L12 3z"></path>
-                            </svg>
-                            Claude
-                        </a>
-                        <a href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" class="ai-link ai-link--chatgpt">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                            </svg>
-                            ChatGPT
-                        </a>
-                        <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" class="ai-link ai-link--gemini">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                            </svg>
-                            Gemini
-                        </a>
-                        <a href="https://z.ai" target="_blank" rel="noopener noreferrer" class="ai-link ai-link--zai">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="4 7 4 4 20 4 20 7"></polyline>
-                                <line x1="9.5" y1="4" x2="14.5" y2="20"></line>
-                                <polyline points="4 17 4 20 20 20 20 17"></polyline>
-                            </svg>
-                            z.ai
-                        </a>
-                    </div>
-                </div>
-
+          <!-- Example Questions -->
+          <div class="example-questions">
+            <div
+              class="example-questions-label"
+              data-i18n="ai.exampleQuestions"
+            >
+              Example questions
             </div>
-        </div>
 
-    </main>
+            <button class="example-chip" data-question-key="ai.ex1question">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              <span data-i18n="ai.ex1label">
+                Datasets where BoostAODE wins in accuracy
+              </span>
+            </button>
 
-    <!-- ====================================================================
-         Credits Modal
-         ==================================================================== -->
-    <div class="modal-overlay" id="credits-modal">
-        <div class="modal modal--credits">
-            <div class="modal-header">
-                <h3 data-i18n="credits.title">About & Credits</h3>
-                <button class="modal-close" aria-label="Close" id="credits-modal-close">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            <button class="example-chip" data-question-key="ai.ex2question">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+              </svg>
+              <span data-i18n="ai.ex2label">
+                &alpha; breakeven value and its meaning
+              </span>
+            </button>
+
+            <button class="example-chip" data-question-key="ai.ex3question">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+              </svg>
+              <span data-i18n="ai.ex3label">
+                Dimensionality vs BoostAODE advantage
+              </span>
+            </button>
+
+            <button class="example-chip" data-question-key="ai.ex4question">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="15" y1="9" x2="9" y2="15"></line>
+                <line x1="9" y1="9" x2="15" y2="15"></line>
+              </svg>
+              <span data-i18n="ai.ex4label">
+                Scenarios where AODE is sufficient
+              </span>
+            </button>
+
+            <button class="example-chip" data-question-key="ai.ex5question">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"
+                ></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+              </svg>
+              <span data-i18n="ai.ex5label">RQ1-RQ5 summary</span>
+            </button>
+
+            <button class="example-chip" data-question-key="ai.ex6question">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+              </svg>
+              <span data-i18n="ai.ex6label">Dataset size vs compression</span>
+            </button>
+          </div>
+
+          <!-- Generated Prompt Output -->
+          <div class="prompt-output-section">
+            <div class="prompt-output-header">
+              <div class="prompt-output-title">
+                <!-- Sparkles icon -->
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M12 3l1.912 5.813a2 2 0 0 0 1.275 1.275L21 12l-5.813 1.912a2 2 0 0 0-1.275 1.275L12 21l-1.912-5.813a2 2 0 0 0-1.275-1.275L3 12l5.813-1.912a2 2 0 0 0 1.275-1.275L12 3z"
+                  ></path>
+                </svg>
+                <span data-i18n="ai.generatedPrompt">Generated Prompt</span>
+              </div>
+              <div class="prompt-output-actions">
+                <span class="token-badge" id="token-badge">~2K tokens</span>
+                <button class="btn btn-secondary btn-sm" id="copy-prompt-btn">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect
+                      x="9"
+                      y="9"
+                      width="13"
+                      height="13"
+                      rx="2"
+                      ry="2"
+                    ></rect>
+                    <path
+                      d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                    ></path>
+                  </svg>
+                  <span data-i18n="common.copy">Copy</span>
                 </button>
+              </div>
             </div>
-            <div class="modal-body">
-                <!-- Author Section -->
-                <div class="credits-section">
-                    <h4 class="credits-section-title">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        <span data-i18n="credits.author">Author</span>
-                    </h4>
-                    <div class="credits-author">
-                        <div class="author-avatar">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        </div>
-                        <div class="author-info">
-                            <div class="author-name">Ricardo Montanana</div>
-                            <div class="author-role" data-i18n="credits.role">Researcher & Developer</div>
-                            <div class="author-links">
-                                <a href="https://orcid.org/0000-0001-7803-6347" class="author-link" target="_blank" rel="noopener" aria-label="ORCID">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.422.947.947s-.422.947-.947.947a.946.946 0 01-.947-.947c0-.525.422-.947.947-.947zm-.722 2.894h1.444v9.244H6.647V7.272zm3.782 0h3.638c1.331 0 2.4.569 2.4 1.9v2.144c0 .853-.634 1.238-1.222 1.347l1.822 3.853h-1.634l-1.631-3.606h-1.144v3.606h-1.228V7.272zm1.228 1.313v1.728h1.928c.659 0 .947-.344.947-.864 0-.531-.359-.864-1.019-.864h-1.856z"/></svg>
-                                </a>
-                                <a href="https://github.com/ricardomontanana" class="author-link" target="_blank" rel="noopener" aria-label="GitHub">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                                </a>
-                                <a href="https://linkedin.com/in/ricardomontanana" class="author-link" target="_blank" rel="noopener" aria-label="LinkedIn">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <textarea
+              class="prompt-output"
+              id="prompt-output"
+              readonly
+              data-i18n-placeholder="ai.promptPlaceholder"
+              placeholder="The prompt will be generated automatically..."
+            ></textarea>
+          </div>
 
-                <!-- Tech Stack Section -->
-                <div class="credits-section">
-                    <h4 class="credits-section-title">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-                        <span data-i18n="credits.techStack">Tech Stack</span>
-                    </h4>
-                    <div class="tech-grid">
-                        <div class="tech-item">
-                            <div class="tech-icon tech-icon--html">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                            </div>
-                            <div class="tech-info">
-                                <span class="tech-name">HTML5</span>
-                                <span class="tech-version">Semantic Markup</span>
-                            </div>
-                        </div>
-                        <div class="tech-item">
-                            <div class="tech-icon tech-icon--css">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                            </div>
-                            <div class="tech-info">
-                                <span class="tech-name">CSS3</span>
-                                <span class="tech-version">Custom Properties</span>
-                            </div>
-                        </div>
-                        <div class="tech-item">
-                            <div class="tech-icon tech-icon--js">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                            </div>
-                            <div class="tech-info">
-                                <span class="tech-name">Vanilla JS</span>
-                                <span class="tech-version">ES6+</span>
-                            </div>
-                        </div>
-                        <div class="tech-item">
-                            <div class="tech-icon tech-icon--chartjs">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
-                            </div>
-                            <div class="tech-info">
-                                <span class="tech-name">Chart.js</span>
-                                <span class="tech-version">Data Visualization</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Libraries Section -->
-                <div class="credits-section">
-                    <h4 class="credits-section-title">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                        <span data-i18n="credits.libraries">Libraries</span>
-                    </h4>
-                    <div class="libraries-list">
-                        <a href="https://pandas.pydata.org/" class="library-item" target="_blank" rel="noopener">
-                            <span class="library-name">Pandas</span>
-                            <span class="library-desc">Data processing</span>
-                        </a>
-                        <a href="https://numpy.org/" class="library-item" target="_blank" rel="noopener">
-                            <span class="library-name">NumPy</span>
-                            <span class="library-desc">Numerical computing</span>
-                        </a>
-                        <a href="https://scikit-learn.org/" class="library-item" target="_blank" rel="noopener">
-                            <span class="library-name">scikit-learn</span>
-                            <span class="library-desc">ML algorithms</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Contributors Section -->
-                <div class="credits-section">
-                    <h4 class="credits-section-title">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                        <span data-i18n="credits.contributors">Contributors</span>
-                    </h4>
-                    <div class="contributors-list">
-                        <div class="contributor-item">
-                            <div class="contributor-info">
-                                <span class="contributor-name">Claude Code Opus</span>
-                                <span class="contributor-desc" data-i18n="credits.contributorDesc">AI Assistant</span>
-                            </div>
-                        </div>
-                        <div class="contributor-item">
-                            <div class="contributor-info">
-                                <span class="contributor-name">GLM 4.7</span>
-                                <span class="contributor-desc" data-i18n="credits.contributorDesc">AI Assistant</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Design Credits Section -->
-                <div class="credits-section">
-                    <h4 class="credits-section-title">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83M16.62 12l-5.74 9.94"/></svg>
-                        <span data-i18n="credits.design">Design</span>
-                    </h4>
-                    <div class="design-credits">
-                        <span class="design-text">Color theme inspired by</span>
-                        <a href="https://tweakcn.com" class="design-link" target="_blank" rel="noopener">Cosmic Night</a>
-                        <span class="design-text">by</span>
-                        <a href="https://tweakcn.com" class="design-link" target="_blank" rel="noopener">tweakcn.com</a>
-                    </div>
-                </div>
+          <!-- AI External Links -->
+          <div class="ai-links-section">
+            <div class="ai-links-label" data-i18n="ai.openExternal">
+              Open in external AI
             </div>
+            <div class="ai-links">
+              <a
+                href="https://claude.ai/new"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="ai-link ai-link--claude"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M12 3l1.912 5.813a2 2 0 0 0 1.275 1.275L21 12l-5.813 1.912a2 2 0 0 0-1.275 1.275L12 21l-1.912-5.813a2 2 0 0 0-1.275-1.275L3 12l5.813-1.912a2 2 0 0 0 1.275-1.275L12 3z"
+                  ></path>
+                </svg>
+                Claude
+              </a>
+              <a
+                href="https://chatgpt.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="ai-link ai-link--chatgpt"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                  ></path>
+                </svg>
+                ChatGPT
+              </a>
+              <a
+                href="https://gemini.google.com/app"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="ai-link ai-link--gemini"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polygon
+                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                  ></polygon>
+                </svg>
+                Gemini
+              </a>
+              <a
+                href="https://z.ai"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="ai-link ai-link--zai"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="4 7 4 4 20 4 20 7"></polyline>
+                  <line x1="9.5" y1="4" x2="14.5" y2="20"></line>
+                  <polyline points="4 17 4 20 20 20 20 17"></polyline>
+                </svg>
+                z.ai
+              </a>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
+    </main>
 
     <!-- ====================================================================
          Footer
          ==================================================================== -->
     <footer class="footer">
-        <div class="footer-inner">
-            <p data-i18n="footer.text">BoostAODE vs AODE &mdash; Paired comparison experiment &mdash; 40 datasets, 5-fold &times; 5 repetitions</p>
-            <button class="btn-credits" data-i18n="footer.credits" data-i18n-title="footer.creditsTitle" aria-label="View credits">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="16" x2="12" y2="12"></line>
-                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                </svg>
-            </button>
-        </div>
+      <div class="footer-inner">
+        <p data-i18n="footer.text">
+          BoostAODE vs AODE &mdash; Paired comparison experiment &mdash; 40
+          datasets, 5-fold &times; 5 repetitions
+        </p>
+        <button
+          class="btn-credits"
+          data-i18n="footer.credits"
+          data-i18n-title="footer.creditsTitle"
+          aria-label="View credits"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+        </button>
+      </div>
     </footer>
 
     <!-- ====================================================================
          Loading Overlay
          ==================================================================== -->
     <div class="loading-overlay" id="loading-overlay">
-        <div class="spinner spinner-lg"></div>
-        <div class="loading-text" data-i18n="common.loadingExperimental">Loading experimental data...</div>
+      <div class="spinner spinner-lg"></div>
+      <div class="loading-text" data-i18n="common.loadingExperimental">
+        Loading experimental data...
+      </div>
     </div>
 
     <!-- ====================================================================
          Copy Feedback Toast
          ==================================================================== -->
-    <div class="copy-feedback" id="copy-feedback" data-i18n="common.copied">Copied!</div>
+    <div class="copy-feedback" id="copy-feedback" data-i18n="common.copied">
+      Copied!
+    </div>
 
     <!-- ====================================================================
          Scripts
@@ -493,37 +657,6 @@
     <script src="js/data.js"></script>
     <script src="js/i18n.js"></script>
     <script src="js/ai-prompt.js"></script>
-
-    <!-- Credits Modal -->
-    <script>
-        (function() {
-            const modal = document.getElementById('credits-modal');
-            if (!modal) return;
-            const closeBtn = document.getElementById('credits-modal-close');
-            const triggerBtns = document.querySelectorAll('.btn-credits');
-
-            function openModal() {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-
-            function closeModal() {
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-
-            triggerBtns.forEach(btn => btn.addEventListener('click', openModal));
-            closeBtn.addEventListener('click', closeModal);
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) closeModal();
-            });
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && modal.classList.contains('active')) {
-                    closeModal();
-                }
-            });
-        })();
-    </script>
-
-</body>
+    <script src="js/credits.js"></script>
+  </body>
 </html>
