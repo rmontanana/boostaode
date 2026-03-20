@@ -10,6 +10,7 @@
 const chartState = {
     currentChart: 'scatter-accuracy',
     chartInstance: null,
+    chartInstance2: null,
     alpha: '0.5'
 };
 
@@ -119,6 +120,16 @@ function destroyChart() {
     if (chartState.chartInstance) {
         chartState.chartInstance.destroy();
         chartState.chartInstance = null;
+    }
+    if (chartState.chartInstance2) {
+        chartState.chartInstance2.destroy();
+        chartState.chartInstance2 = null;
+    }
+    // Remove dual-panel container if present
+    var dual = document.getElementById('timing-dual-panel');
+    if (dual) {
+        dual.remove();
+        document.getElementById('chart-canvas').style.display = '';
     }
 }
 
@@ -972,7 +983,6 @@ function renderCompressionFeatures() {
 function renderTiming() {
     var colors = getChartColors();
     var results = AppData.experimental.results;
-    var ctx = document.getElementById('chart-canvas').getContext('2d');
 
     // Compute mean train/predict times per dataset per classifier
     var datasetMap = {};
@@ -983,7 +993,6 @@ function renderTiming() {
         datasetMap[key].predict.push(r.predict_time);
     });
 
-    // Compute per-dataset means
     var perDataset = {};
     Object.keys(datasetMap).forEach(function(key) {
         var parts = key.split('|');
@@ -994,7 +1003,6 @@ function renderTiming() {
         perDataset[ds][cls] = { train: trainMean, predict: predictMean };
     });
 
-    // Overall means
     var allAodeTrain = [], allAodePredict = [], allBoostTrain = [], allBoostPredict = [];
     Object.keys(perDataset).forEach(function(ds) {
         if (perDataset[ds].AODE) {
@@ -1008,71 +1016,90 @@ function renderTiming() {
     });
 
     var mean = function(arr) { return arr.reduce(function(s, v) { return s + v; }, 0) / arr.length; };
+    var aodeTrain = mean(allAodeTrain), aodePredict = mean(allAodePredict);
+    var boostTrain = mean(allBoostTrain), boostPredict = mean(allBoostPredict);
 
-    var summaryLabels = [i18n.t('charts.timing.training'), i18n.t('charts.timing.prediction')];
-    var aodeMeans = [mean(allAodeTrain), mean(allAodePredict)];
-    var boostMeans = [mean(allBoostTrain), mean(allBoostPredict)];
+    // Hide single canvas and create dual-panel layout
+    var mainCanvas = document.getElementById('chart-canvas');
+    mainCanvas.style.display = 'none';
 
-    chartState.chartInstance = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: summaryLabels,
-            datasets: [
-                {
-                    label: i18n.t('charts.legend.aode'),
-                    data: aodeMeans,
-                    backgroundColor: hexToRgba(colors.aode, 0.7),
-                    borderColor: colors.aode,
+    var wrapper = document.getElementById('chart-wrapper');
+    var dual = document.createElement('div');
+    dual.id = 'timing-dual-panel';
+    dual.style.cssText = 'display:flex;gap:16px;width:100%;height:100%;';
+    dual.innerHTML =
+        '<div style="flex:1;position:relative;"><canvas id="timing-canvas-train"></canvas></div>' +
+        '<div style="flex:1;position:relative;"><canvas id="timing-canvas-predict"></canvas></div>';
+    wrapper.appendChild(dual);
+
+    var classifierLabels = ['AODE', 'BoostAODE'];
+    var barColors = [hexToRgba(colors.aode, 0.7), hexToRgba(colors.boostaode, 0.7)];
+    var borderCols = [colors.aode, colors.boostaode];
+
+    function makeChart(canvasId, title, values, decimals) {
+        var ctx = document.getElementById(canvasId).getContext('2d');
+        return new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: classifierLabels,
+                datasets: [{
+                    data: values,
+                    backgroundColor: barColors,
+                    borderColor: borderCols,
                     borderWidth: 1,
                     borderRadius: 4
-                },
-                {
-                    label: i18n.t('charts.legend.boostaode'),
-                    data: boostMeans,
-                    backgroundColor: hexToRgba(colors.boostaode, 0.7),
-                    borderColor: colors.boostaode,
-                    borderWidth: 1,
-                    borderRadius: 4
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            indexAxis: 'y',
-            plugins: {
-                legend: {
-                    labels: { color: colors.textSec, font: { size: 12 }, usePointStyle: true }
-                },
-                tooltip: {
-                    backgroundColor: colors.bgElevated,
-                    titleColor: colors.text,
-                    bodyColor: colors.textSec,
-                    borderColor: colors.border,
-                    borderWidth: 1,
-                    cornerRadius: 8,
-                    padding: 10,
-                    callbacks: {
-                        label: function(ctx) {
-                            return ctx.dataset.label + ': ' + ctx.raw.toFixed(4) + ' s';
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: title, color: colors.text, font: { size: 14 } },
+                    tooltip: {
+                        backgroundColor: colors.bgElevated,
+                        titleColor: colors.text,
+                        bodyColor: colors.textSec,
+                        borderColor: colors.border,
+                        borderWidth: 1,
+                        cornerRadius: 8,
+                        padding: 10,
+                        callbacks: {
+                            label: function(ctx) { return ctx.raw.toFixed(decimals) + ' s'; }
                         }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: colors.textSec, font: { size: 12 } },
+                        grid: { display: false }
+                    },
+                    y: {
+                        title: { display: true, text: i18n.t('charts.axis.meanTime'), color: colors.textSec, font: { size: 12 } },
+                        beginAtZero: true,
+                        ticks: { color: colors.textMuted, font: { size: 11 } },
+                        grid: { color: colors.gridDark }
                     }
                 }
             },
-            scales: {
-                x: {
-                    title: { display: true, text: i18n.t('charts.axis.meanTime'), color: colors.textSec, font: { size: 13 } },
-                    beginAtZero: true,
-                    ticks: { color: colors.textMuted, font: { size: 11 } },
-                    grid: { color: colors.gridDark }
-                },
-                y: {
-                    ticks: { color: colors.textSec, font: { size: 13, weight: '600' } },
-                    grid: { display: false }
+            plugins: [{
+                afterDatasetsDraw: function(chart) {
+                    var ctx2 = chart.ctx;
+                    ctx2.font = '11px sans-serif';
+                    ctx2.fillStyle = colors.text;
+                    ctx2.textAlign = 'center';
+                    chart.getDatasetMeta(0).data.forEach(function(bar, idx) {
+                        ctx2.fillText(values[idx].toFixed(decimals) + ' s', bar.x, bar.y - 6);
+                    });
                 }
-            }
-        }
-    });
+            }]
+        });
+    }
+
+    chartState.chartInstance = makeChart('timing-canvas-train',
+        i18n.t('charts.timing.training'), [aodeTrain, boostTrain], 2);
+    chartState.chartInstance2 = makeChart('timing-canvas-predict',
+        i18n.t('charts.timing.prediction'), [aodePredict, boostPredict], 3);
 }
 
 // ===========================================================================
